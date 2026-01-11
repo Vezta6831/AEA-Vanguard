@@ -1,0 +1,208 @@
+[core]
+defineUnitMemory: float numLarvae, string unitType, unit rally
+
+[hiddenAction_spawnLarvae]
+autoTrigger: if memory.numLarvae<6 and self.customTimer>=14 and memory.unitType==null
+spawnUnits:larva(offsetY=40,offsetRandomX=20)
+resetCustomTimer:true
+
+[hiddenAction_addNumLarvae]
+autoTriggerOnEvent: newMessage(withTag="addMe")
+setUnitMemory: numLarvae=memory.numLarvae+1
+
+[hiddenAction_removeNumLarvae]
+autoTriggerOnEvent: newMessage(withTag="removeMe")
+setUnitMemory: numLarvae=memory.numLarvae-1
+
+[hiddenAction_removeUnitType]
+autoTriggerOnEvent: newMessage(withTag="removeUnitType")
+autoTrigger: if memory.unitType!=null and memory.numLarvae<=0
+setUnitMemory: unitType=null
+
+[action_selectLarvae]
+requireConditional: if self.resource(type='select',equalTo=0)
+isVisible: if self.resource(type='select',equalTo=0)
+isActive: if self.resource(type='select',equalTo=0) and memory.numLarvae>0
+displayType: queueUnit
+price: 0
+pos: 0
+text_ru: Личинка
+text: Larvae
+buildSpeed: 0
+ai_isDisabled: true
+iconImage:ROOT:/DATA/Zerg/larva_icon.png
+highPriorityQueue: true
+alwaysSinglePress:true
+resourceAmount: select
+resourceAmount_setValue: 1
+
+[action_rally]
+isVisible: if self.resource(type='select',equalTo=0)
+isActive: if self.resource(type='select',equalTo=0)
+price: 0
+pos: 0
+text_ru: Точка сбора
+text: Rally point
+buildSpeed: 0
+ai_isDisabled: true
+iconImage:ROOT:/DATA/total/rallyIcon.png
+highPriorityQueue: true
+fireTurretXAtGround:rally
+buildSpeed:0
+setUnitMemory:rally=thisActionTarget
+
+[action_cancel]
+price:0
+pos:0
+buildSpeed:0
+text_ru: Отмена
+text: Cancel
+isVisible: if self.resource(type='select',greaterThan=0)
+isActive: if self.resource(type='select',greaterThan=0)
+resourceAmount: select
+resourceAmount_setValue: 0
+iconImage:ROOT:/DATA/total/cancel.png
+alwaysSinglePress:true
+
+[action_queueDrone]
+isVisible: if self.resource(type='select',equalTo=1)
+isActive: if memory.numLarvae>0 and self.resource(type='select',equalTo=1)
+displayType: action
+price: Minerals=75
+displayType: queueUnit
+text:
+description:
+textAddUnitName: ${section.unitShownInUI}
+descriptionAddFromUnit: ${section.unitShownInUI}
+descriptionAddUnitStats: ${section.unitShownInUI}
+pos: 0.1
+buildSpeed: 0
+ai_isDisabled: true
+highPriorityQueue: true
+unitShownInUI: zdrone
+setUnitMemory: unitType="zdrone"
+resourceAmount: select
+resourceAmount_setValue: 0
+
+[action_queueOverlord]
+@copyFromSection: action_queueDrone
+isLocked: IGNORE
+price: Minerals=50
+addResources: Minerals=50
+pos: 0.2
+unitShownInUI: zoverlord
+setUnitMemory: unitType="zoverlord"
+
+[action_queueZergling]
+@copyFromSection: action_queueDrone
+isLocked: if not self.hasUnitInTeam(withTag='SpawningPool')
+isLockedMessage_ru:Требуется:\n  >Омут рождения
+isLockedMessage:Requires:\n  >Spawning pool
+price: Minerals=50
+addResources: Minerals=50
+pos: 0.3
+unitShownInUI: zergling
+setUnitMemory: unitType="zergling"
+
+[action_queueHydralisk]
+@copyFromSection: action_queueDrone
+isLocked: if not self.hasUnitInTeam(withTag='HydraliskDen')
+isLockedMessage_ru:Требуется:\n  >Пещера Гидралисков
+isLockedMessage:Requires:\n  >Hydralisk den
+price: Minerals=100,Gas=25
+addResources: Minerals=100,Gas=25
+pos: 0.4
+unitShownInUI: hydralisk
+setUnitMemory: unitType="hydralisk"
+
+[action_queueMutalisk]
+@copyFromSection: action_queueDrone
+isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags(includes='SpireLocked')
+isLocked: if not self.hasUnitInTeam(withTag='Spire')
+isLockedMessage_ru:Требуется:\n  >Шпиль
+isLockedMessage:Requires:\n  >Spire
+price: Minerals=125,Gas=50
+addResources: Minerals=125,Gas=50
+pos: 0.5
+unitShownInUI: mutalisk
+setUnitMemory: unitType="mutalisk"
+
+[action_queueScourge]
+@copyFromSection: action_queueDrone
+isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags(includes='SpireLocked')
+isLocked: if not self.hasUnitInTeam(withTag='Spire')
+isLockedMessage_ru:Требуется:\n  >Шпиль
+isLockedMessage:Requires:\n  >Spire
+price: Minerals=250, Gas=75
+addResources: Minerals=250, Gas=75
+pos: 0.6
+unitShownInUI: scourge
+setUnitMemory: unitType="scourge"
+
+[action_queueQueen]
+@copyFromSection: action_queueDrone
+isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags(includes='QueenNestLocked')
+isLocked: if not self.hasUnitInTeam(withTag='QueenNest')
+isLockedMessage_ru:Требуется:\n  >Гнездо Королевы
+isLockedMessage:Requires:\n  >Queen nest
+price: Minerals=300,Gas=150
+addResources: Minerals=300,Gas=150
+pos: 0.7
+unitShownInUI: queen
+setUnitMemory: unitType="queen"
+
+[action_queueUltralisk]
+@copyFromSection: action_queueDrone
+isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags(includes='UltraliskCavernLocked')
+isLocked: if not self.hasUnitInTeam(withTag='UltraliskCavern')
+isLockedMessage_ru:Требуется:\n  >Пещера Ультралисков
+isLockedMessage:Requires:\n  >Ultralisk cavern
+price: Minerals=1125,Gas=550
+addResources: Minerals=1125,Gas=550
+pos: 0.8
+unitShownInUI: ultralisk
+setUnitMemory: unitType="ultralisk"
+
+[action_queueDefiler]
+@copyFromSection: action_queueDrone
+isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags(includes='DefilerMoundLocked')
+isLocked: if not self.hasUnitInTeam(withTag='DefilerMound')
+isLockedMessage_ru:Требуется:\n  >Логово Осквернителей
+isLockedMessage:Requires:\n  >Defiler mound
+price: Minerals=650,Gas=275
+addResources: Minerals=650,Gas=275
+pos: 0.9
+unitShownInUI: defiler
+setUnitMemory: unitType="defiler"
+
+[turret_rally]
+x: 0
+y: 0
+limitingRange:9999
+canShoot: false
+projectile:rally
+
+[projectile_rally]
+life:0
+speed:0
+invisible: true
+directDamage: 0
+explodeEffect:NONE
+explodeEffectOnShield:NONE
+
+[decal_rally]
+@define frameStart: 0
+@define totalFrames:10
+@define framesPerSec: 16
+isVisible: if memory.rally!=nullUnit
+layer: beforeUI
+onlyWhenSelectedByOwnPlayer:true
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+image:ROOT:/DATA/total/rally.png
+frame_width:44
+frame_height:28
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+basePosition: memory.rally
+onlyWhileAlive: true

@@ -1,0 +1,10 @@
+[action_portrait]
+isVisible:true
+isActive:false
+displayType: infoOnlyNoBox
+price:  0
+pos:-99
+buildSpeed: 0s
+allowMultipleInQueue:false
+isAlsoViewableByAllies:true
+isAlsoViewableByEnemies:true

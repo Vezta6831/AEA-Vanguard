@@ -1,0 +1,111 @@
+[core]
+copyFrom:ROOT:/DATA/total/forcesAttack.template
+class: CustomUnitMetadata
+techLevel: 1
+hideScorchMark: false
+isBio: true
+isBug: false
+selfRegenRate:0.01
+softCollisionOnAll: 5
+fogOfWarSightRange:17
+effectOnDeath:CUSTOM:corpse
+
+[hiddenAction_armor]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=0) and not self.tags(includes='armor1')
+temporarilyAddTags: armor1
+setUnitStats: armour+=1
+
+[hiddenAction_armor_2]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=1) and not self.tags(includes='armor2')
+temporarilyAddTags: armor2
+setUnitStats: armour+=1
+
+[hiddenAction_armor_3]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=2) and not self.tags(includes='armor3')
+temporarilyAddTags: armor3
+setUnitStats: armour+=1
+
+[hiddenAction_swarm]
+autoTrigger: if self.hasUnitInTeam(withTag='swarm',withinRange=120) and not self.tags(includes='zergSwarm')
+temporarilyAddTags: zergSwarm
+
+[hiddenAction_notSwarm]
+autoTrigger: if not self.hasUnitInTeam(withTag='swarm',withinRange=120) and self.tags(includes='zergSwarm')
+temporarilyRemoveTags: zergSwarm
+
+[hiddenAction_consume_debuff]
+autoTriggerOnEvent: newMessage(withTag="consume")
+takeResources: energy=-50
+takeResources_includeUnitsWithinRange: 100
+takeResources_discardCollected: true
+takeResources_includeReference: eventSource
+addResources:hp=-9999
+spawnEffects:CUSTOM:consume
+
+[effect_consume]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 180
+alpha: 18
+image:ROOT:/DATA/Zerg/consume.png
+priority: critical
+drawUnderUnits:false
+total_frames:18
+animateFrameStart:0
+animateFrameEnd:17
+animateFrameSpeed:0.2
+frame_width:  73
+frame_height: 69
+
+[effect_cloud]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 70
+alpha: 7
+hSpeed: 0
+image:ROOT:/DATA/Zerg/units/cloud.png
+priority: critical
+drawUnderUnits:false
+total_frames:7
+animateFrameStart:0
+animateFrameEnd:6
+animateFrameSpeed:0.2
+scaleFrom:1
+scaleTo: 1
+
+[attack]
+canAttack: true
+canAttackFlyingUnits: true
+canAttackLandUnits:   true
+canAttackUnderwaterUnits: false
+isFixedFiring: true
+turretSize:10
+showRangeUIGuide:false
+
+[movement]
+movementType: LAND
+moveAccelerationSpeed: 20
+moveDecelerationSpeed: 20
+maxTurnSpeed: 20
+turnAcceleration: 20
+reverseSpeedPercentage:0
+joinsGroupFormations: false
+
+[ai]
+buildPriority: 0.8
+noneInBaseExtraPriority: 0.8
+noneGlobalExtraPriority: 0.8
+maxEachBase: 10
+
+[hiddenAction_attackKerrigan]
+autoTrigger: if self.globalTeamTags(includes="AttackKerrigan") and not self.hasActiveWaypoint(type="attackmove") and self.isControlledByAI()
+addWaypoint_type: attackmove
+addWaypoint_target_nearestUnit_tagged: Kerrigan
+addWaypoint_target_nearestUnit_team: enemy
+clearAllWaypoints:true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true

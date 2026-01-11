@@ -1,0 +1,22 @@
+[graphics]
+showHealthBar:true
+showEnergyBar:true
+showShieldBar:true
+showSelectionIndicator:true
+
+[template_customSelectCircle]
+layer: beforeBody
+order:0
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+onlyWhileAlive: true
+
+[template_customBar]
+layer: beforeBody
+order:1
+onlyWhenSelectedByAnyPlayer:true
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+onlyWhileAlive: true

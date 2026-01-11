@@ -1,0 +1,14 @@
+[global_resource_ZergMeleeAttack]
+hidden:true
+
+[global_resource_ZergRangeAttack]
+hidden:true
+
+[global_resource_ZergAirAttack]
+hidden:true
+
+[global_resource_ZergGroundCarapace]
+hidden:true
+
+[global_resource_ZergAirCarapace]
+hidden:true

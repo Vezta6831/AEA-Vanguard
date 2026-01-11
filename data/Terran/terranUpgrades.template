@@ -1,0 +1,17 @@
+[global_resource_TerranInfantryAttack]
+hidden:true
+
+[global_resource_TerranVehicleAttack]
+hidden:true
+
+[global_resource_TerranAirAttack]
+hidden:true
+
+[global_resource_TerranInfantryArmor]
+hidden:true
+
+[global_resource_TerranVehicleArmor]
+hidden:true
+
+[global_resource_TerranAirArmor]
+hidden:true

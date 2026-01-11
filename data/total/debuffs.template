@@ -1,0 +1,260 @@
+[core]
+maxShield:0
+shieldRegen:0
+shieldDisplayOnlyDeflection:true
+autoTriggerCooldownTime: 0.1s
+@memory mStatus: float
+
+[attack]
+canOnlyAttackUnitsWithoutTags: stasis
+
+[hiddenAction_notShiftable]
+autoTrigger: if (self.maxMoveSpeed>0 and self.speed<=0 and memory.mStatus!=1 and not self.isFlying()) or (self.maxMoveSpeed>0 and self.speed>0 and memory.mStatus!=2 and not self.isFlying())
+setUnitStats: mass=select(self.speed<=0,9999999,${core.mass})
+setUnitMemory: mStatus=select(self.speed<=0,1,2)
+
+
+
+[hiddenAction_debuff_ensnare]
+autoTrigger: if self.resource.ensnare>0
+temporarilyAddTags: ensnare
+addResources:ensnare=-0.1
+setUnitStats: moveSpeed=${movement.moveSpeed}*0.5, shootDelayMultiplier=1.18
+
+[hiddenAction_removeDebuff_ensnare]
+autoTrigger: if (self.resource.ensnare<=0 and self.tags(includes="ensnare")) or self.tags(includes="lockdown") or self.tags(includes="maelstrom") or self.tags(includes="stasis")
+setResourcesWithLogic:ensnare=0
+resetToDefaultTags:true
+resetUnitStats:true
+
+[hiddenAction_debuff_plague]
+autoTrigger: if self.resource.plague>0
+addResources:plague=-0.1
+takeResources:hp=6
+takeResources_discardCollected: true
+takeResources_includeReference: self
+takeResources_includeUnitsWithinRange:50
+
+[hiddenAction_buff_defensive_matrix]
+autoTrigger: if self.resource.d_matrix>0 and not self.tags(includes="matrix")
+temporarilyAddTags: matrix
+setUnitStats: maxShield=${core.maxShield}+250, shieldRegen=0, shield+=250
+
+[hiddenAction_buff_defensive_matrix_2]
+autoTrigger: if self.resource.d_matrix>0
+addResources:d_matrix=-0.1
+
+[hiddenAction_buff_defensive_matrix_3]
+autoTrigger: if (self.resource.d_matrix<=0 or self.shield<=${core.maxShield}) and self.tags(includes="matrix")
+temporarilyRemoveTags: matrix
+setUnitStats: maxShield=${core.maxShield}, shieldRegen=${core.shieldRegen}
+setResourcesWithLogic: d_matrix=0
+
+[hiddenAction_debuff_lockdown]
+autoTrigger: if self.resource.lockdown>0
+clearAllWaypoints:true
+temporarilyAddTags: lockdown
+addResources:lockdown=-0.1
+setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
+
+[hiddenAction_removeDebuff_lockdown]
+autoTrigger: if self.resource.lockdown<=0 and self.tags(includes="lockdown")
+resetToDefaultTags:true
+resetUnitStats:true
+
+[hiddenAction_mindControl_debuff]
+autoTriggerOnEvent: newMessage(withTag="MindControl")
+switchToTeam: eventSource.teamId
+clearAllWaypoints:true
+spawnEffects:CUSTOM:mindControl
+
+[hiddenAction_feedback_debuff]
+autoTriggerOnEvent: newMessage(withTag="Feedback")
+addResourcesWithLogic: hp=self.energy*(-1), energy=-9999
+spawnEffects:CUSTOM:feedback
+
+[hiddenAction_debuff_maelstrom]
+autoTrigger: if self.resource.maelstrom>0
+clearAllWaypoints:true
+temporarilyAddTags: maelstrom
+addResources:maelstrom=-0.1
+setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
+
+[hiddenAction_removeDebuff_maelstrom]
+autoTrigger: if self.resource.maelstrom<=0 and self.tags(includes="maelstrom")
+resetToDefaultTags:true
+resetUnitStats:true
+
+[hiddenAction_debuff_stasis]
+autoTrigger: if self.resource.stasis>0
+clearAllWaypoints:true
+temporarilyAddTags: stasis
+addResources:stasis=-0.1
+setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
+
+[hiddenAction_removeDebuff_stasis]
+autoTrigger: if self.resource.stasis<=0 and self.tags(includes="stasis")
+resetToDefaultTags:true
+resetUnitStats:true
+
+[hiddenAction_restoration_buff]
+autoTriggerOnEvent: newMessage(withTag="Restoration")
+setResourcesWithLogic: ensnare=0, plague=0, lockdown=0
+spawnEffects:CUSTOM:restoration
+
+[decal_ensnare_goo]
+@define frameStart: 0
+@define totalFrames:4
+@define framesPerSec: 12
+isVisible: if self.resource.ensnare>0
+layer: beforeUI
+image:ROOT:/DATA/total/ensnare_goo.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+total_frames:4
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[decal_plague_goo]
+@define frameStart: 0
+@define totalFrames:4
+@define framesPerSec: 12
+isVisible: if self.resource.plague>0
+layer: beforeUI
+image:ROOT:/DATA/total/plague_goo.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+total_frames:4
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[decal_defensive_matrix]
+@define frameStart: 0
+@define totalFrames:5
+@define framesPerSec: 18
+isVisible: if self.resource.d_matrix>0
+layer: beforeUI
+image:ROOT:/DATA/total/defensive_matrix.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+total_frames:5
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[decal_lockdown]
+@define frameStart: 0
+@define totalFrames:6
+@define framesPerSec: 12
+isVisible: if self.resource.lockdown>0
+layer: beforeUI
+image:ROOT:/DATA/total/lockdown.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+total_frames:6
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[decal_stasis]
+@define frameStart: 0
+@define totalFrames:7
+@define framesPerSec: 12
+isVisible: if self.resource.stasis>0
+layer: beforeUI
+image:ROOT:/DATA/total/stasis.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+frame_width:80
+frame_height:80
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[effect_mindControl]
+alwayStartDirAtZero:true
+attachedToUnit: true
+life: 200
+alpha: 20
+image:ROOT:/DATA/total/mindControl.png
+priority: critical
+drawUnderUnits:false
+hOffset: 15
+total_frames:20
+animateFrameStart:0
+animateFrameEnd:19
+animateFrameSpeed:0.2
+frame_width:  32
+frame_height: 32
+
+[effect_feedback]
+alwayStartDirAtZero:true
+attachedToUnit: true
+life: 210
+alpha: 21
+image:ROOT:/DATA/total/feedback.png
+priority: critical
+drawUnderUnits:false
+total_frames:21
+animateFrameStart:0
+animateFrameEnd:20
+animateFrameSpeed:0.2
+frame_width:  64
+frame_height: 64
+
+[decal_maelstrom]
+@define frameStart: 0
+@define totalFrames:12
+@define framesPerSec: 12
+isVisible: if self.resource.maelstrom>0
+layer: beforeUI
+image:ROOT:/DATA/total/maelstrom.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-5
+frame_width:32
+frame_height:32
+frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
+onlyWhileAlive: true
+
+[effect_restoration]
+alwayStartDirAtZero:true
+attachedToUnit: true
+life: 100
+alpha:20
+image:ROOT:/DATA/total/restoration.png
+priority: critical
+drawUnderUnits:false
+liveAfterAttachedDies: false
+total_frames:17
+animateFrameStart:0
+animateFrameEnd:16
+animateFrameSpeed:0.22
+frame_width:  64
+frame_height: 64
+
+[resource_ensnare]
+hidden:true
+
+[resource_plague]
+hidden:true
+
+[resource_d_matrix]
+hidden:true
+
+[resource_lockdown]
+hidden:true
+
+[resource_maelstrom]
+hidden:true
+
+[resource_stasis]
+hidden:true

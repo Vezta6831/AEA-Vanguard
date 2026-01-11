@@ -1,0 +1,5 @@
+[hiddenAction_baseAttack]
+requireConditional: if self.resource(type='baseAttack',lessThan=1)
+autoTriggerOnEvent: tookDamage
+resourceAmount: baseAttack
+resourceAmount_setValue: 30

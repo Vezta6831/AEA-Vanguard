@@ -1,0 +1,13 @@
+[hiddenAction_forcesAttack]
+requireConditional: if self.resource(type='forcesAttack',lessThan=1)
+autoTriggerOnEvent: tookDamage
+resourceAmount: forcesAttack
+resourceAmount_setValue: 30
+
+[hiddenAction_goBackOnDamaged]
+autoTriggerOnEvent: tookDamage
+requireConditional: if not self.hasActiveWaypoint() and not self.isMoving() and not self.isAttacking() and self.lastDamagedBy!=nullUnit and not self.hasParent() and self.resource.lockdown<=0 and self.resource.stasis<=0 and self.resource.maelstrom<=0
+addWaypoint_type:move
+addWaypoint_prepend:true
+addWaypoint_target_fromReference: getOffsetAbsolute(x=cos(directionBetween(self, lastDamagedBy))*(-120), y=sin(directionBetween(self, lastDamagedBy))*(-120))
+addWaypoint_maxTime:4s

@@ -1,0 +1,4 @@
+[hiddenAction_supplyBlock]
+requireConditional: if self.resource(type='supply',lessThan=1) and not self.globalTeamTags(includes='SupplyBlock')
+autoTriggerOnEvent: queueItemAdded
+addGlobalTeamTags: SupplyBlock

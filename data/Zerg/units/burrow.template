@@ -1,0 +1,24 @@
+[action_burrow]
+alwaysSinglePress:true
+isVisible: if self.globalTeamTags(includes='LairLurk')
+isActive: if self.globalTeamTags(includes='LairLurk') and self.queueSize(equalTo=0) and self.resource.maelstrom<=0 and self.resource.stasis<=0
+displayType: upgrade
+price:0
+pos: 0.1
+text_ru: Зарыться
+text: Burrow
+buildSpeed: 0s
+highPriorityQueue: true
+ai_isDisabled:true
+iconImage:ROOT:/DATA/Zerg/burrow.png
+playSoundAtUnit:ROOT:/DATA/Zerg/lurk.ogg:0.3
+alsoQueueAction:burrow_2
+allowMultipleInQueue:false
+spawnEffects:CUSTOM:cloud
+
+[hiddenAction_burrow_2]
+highPriorityQueue: true
+whenBuilding_playAnimation:burrow
+whenBuilding_cannotMove:true
+canPlayerCancel:false
+setResourcesWithLogic:ensnare=0

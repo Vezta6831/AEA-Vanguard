@@ -1,0 +1,108 @@
+[core]
+copyFrom:ROOT:/DATA/total/debuffs.template
+class: CustomUnitMetadata
+price: 0
+selfRegenRate:0.01
+mass: 9000
+hideScorchMark: false
+fogOfWarSightRange:17
+techLevel: 1
+buildSpeed: 1
+selfBuildRate: 1
+isBuilder: true
+nanoRange: 0
+isBuilding: true
+isBio: true
+numBitsOnDeath: 12
+isUnrepairableUnit: false
+effectOnDeath: CUSTOM:corpse
+
+[hiddenAction_baseAttack]
+requireConditional: if self.resource(type='baseAttack',lessThan=1)
+autoTriggerOnEvent: tookDamage
+resourceAmount: baseAttack
+resourceAmount_setValue: 30
+
+[template_blood]
+layer: beforeUI
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+frame_width:64
+frame_height:96
+#frameStart+self.timeAlive*framesPerSec%totalFrames
+onlyWhileAlive: true
+
+[effect_corpse]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 120
+alpha: 12
+image:ROOT:/DATA/Zerg/death.png
+priority: critical
+drawUnderUnits:false
+total_frames:12
+animateFrameStart:0
+animateFrameEnd:11
+animateFrameSpeed:0.2
+alsoPlaySound:ROOT:/DATA/Zerg/vomit.ogg
+frame_width:  200
+frame_height: 200
+
+[action_clear]
+isVisible:true
+isActive:true
+buildSpeed:1s
+price:0
+pos: 99
+text_ru:Уничтожить
+text:Delete
+iconImage:ROOT:/DATA/total/delete.png
+addResources:hp=0
+ai_isDisabled:true
+highPriorityQueue: true
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+maxAttackRange: 0
+
+[movement]
+movementType: NONE
+
+[ai]
+buildPriority: 0.09
+noneInBaseExtraPriority: 0.09
+noneGlobalExtraPriority: 0.09
+
+[hiddenAction_debuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[decal_ensnare_goo]
+@copyFrom_skipThisSection: true
+
+[decal_plague_goo]
+image:ROOT:/DATA/total/plague_goo_3.png

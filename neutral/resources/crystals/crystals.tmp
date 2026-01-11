@@ -1,0 +1,73 @@
+[core]
+@global maxHp:50
+copyFrom:ROOT:/DATA/total/customUI.template
+tags: Crystals,resources
+class: CustomUnitMetadata
+mass: 9000
+stayNeutral: true
+createNeutral: true
+hideScorchMark: true
+fogOfWarSightRange:0
+isBuilding: true
+footprint: -1,0,0,0
+constructionFootprint:-1,0,0,0
+buildingToFootprintOffsetX:0
+buildingToFootprintOffsetY:0
+displayText_ru: Минералы
+displayText: Minerals
+techLevel: 1
+buildSpeed: 1
+selfBuildRate: 1
+resourceRate: 0.001
+resourceMaxConcurrentReclaimingThis: 10
+similarResourcesHaveTag: Crystals
+radius: 30
+isBio: true
+isUnrepairableUnit: true
+canNotBeDamaged:true
+canNotBeDirectlyAttacked:true
+
+
+[placementRule_FarFromCC]
+searchTags: resourceDropoff
+searchDistance: 100
+maxCount: 0
+cannotPlaceMessage_ru: Здесь нельзя строить!
+cannotPlaceMessage: You can't build it here!
+searchTeam: neutral
+
+[graphics]
+showHealthBar:false
+showEnergyBar:false
+image: ROOT:/DATA/total/null.png
+drawLayer:experimentals
+image_shadow:NONE
+#shadowOffsetX:0
+#shadowOffsetY:2
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+maxAttackRange: 0
+
+[movement]
+movementType: NONE
+
+[decal_crystal]
+@define totalFrames:3
+@define totalVariations:4
+layer: onTop
+image:crystals.png
+alwaysStartDirAtZero:true
+teamColors:false
+frame_width:84
+frame_height:70
+
+
+[decal_yellow_circle]
+@copyFromSection: template_customSelectCircle
+onlyWhenSelectedByAnyPlayer:true
+image:ROOT:/DATA/total/circle_lrg_yell.png
+yOffsetAbsolute:5

@@ -1,0 +1,92 @@
+[core]
+copyFrom:ROOT:/DATA/total/forcesAttack.template
+class: CustomUnitMetadata
+mass: 500
+techLevel: 1
+hideScorchMark: false
+isBio: true
+isBug: false
+isUnrepairableUnit: true
+selfRegenRate:0.01
+softCollisionOnAll: 250
+explodeOnDeath: false
+explodeOnDeathGroundCollosion: false
+effectOnDeath:CUSTOM:corpse
+fogOfWarSightRange:17
+
+[hiddenAction_armor]
+autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=0) and not self.tags(includes='armor1')
+temporarilyAddTags: armor1
+setUnitStats: armour+=1
+
+[hiddenAction_armor_2]
+autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=1) and not self.tags(includes='armor2')
+temporarilyAddTags: armor2
+setUnitStats: armour+=1
+
+[hiddenAction_armor_3]
+autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=2) and not self.tags(includes='armor3')
+temporarilyAddTags: armor3
+setUnitStats: armour+=1
+
+[hiddenAction_consume_debuff]
+autoTriggerOnEvent: newMessage(withTag="consume")
+takeResources: energy=-50
+takeResources_includeUnitsWithinRange: 100
+takeResources_discardCollected: true
+takeResources_includeReference: eventSource
+addResources:hp=-9999
+spawnEffects:CUSTOM:consume
+
+[effect_consume]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 180
+alpha: 18
+image:ROOT:/DATA/Zerg/consume.png
+priority: critical
+drawUnderUnits:false
+total_frames:18
+animateFrameStart:0
+animateFrameEnd:17
+animateFrameSpeed:0.2
+frame_width:  73
+frame_height: 69
+
+[attack]
+canAttack: true
+canAttackFlyingUnits: true
+canAttackLandUnits:   true
+canAttackUnderwaterUnits: false
+isFixedFiring: true
+showRangeUIGuide:false
+
+[movement]
+movementType: AIR
+moveAccelerationSpeed: 0.03
+moveDecelerationSpeed: 0.02
+maxTurnSpeed: 40
+turnAcceleration: 40
+reverseSpeedPercentage:0
+joinsGroupFormations: false
+slowDeathFallSmoke: false
+slowDeathFall: false
+
+[ai]
+buildPriority: 0.8
+noneInBaseExtraPriority: 0.8
+noneGlobalExtraPriority: 0.8
+maxEachBase: 10
+
+[hiddenAction_attackKerrigan]
+autoTrigger: if self.globalTeamTags(includes="AttackKerrigan") and not self.hasActiveWaypoint(type="attackmove") and self.isControlledByAI()
+addWaypoint_type: attackmove
+addWaypoint_target_nearestUnit_tagged: Kerrigan
+addWaypoint_target_nearestUnit_team: enemy
+clearAllWaypoints:true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true

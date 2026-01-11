@@ -1,0 +1,156 @@
+[core]
+copyFrom:ROOT:/DATA/total/forcesAttack.template
+showActionsWithMixedSelectionIfOtherUnitsHaveTag:undergroundZerg
+disableAllUnitCollisions:true
+showInEditor: false
+class: CustomUnitMetadata
+price: 500
+borrowResourcesWhileAlive:supply=1, displaySupply=-1
+mass: 500
+techLevel: 1
+buildSpeed: 0.005
+radius: 0
+hideScorchMark: false
+isBio: true
+isBug: false
+selfRegenRate:0.01
+softCollisionOnAll: 12
+fogOfWarSightRange:6
+transportSlotsNeeded: 999
+effectOnDeath:CUSTOM:corpse
+
+[hiddenAction_armor]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=0) and not self.tags(includes='armor1')
+temporarilyAddTags: armor1
+setUnitStats: armour+=1
+
+[hiddenAction_armor_2]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=1) and not self.tags(includes='armor2')
+temporarilyAddTags: armor2
+setUnitStats: armour+=1
+
+[hiddenAction_armor_3]
+autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=2) and not self.tags(includes='armor3')
+temporarilyAddTags: armor3
+setUnitStats: armour+=1
+
+[hiddenAction_swarm]
+autoTrigger: if self.hasUnitInTeam(withTag='swarm',withinRange=120) and not self.tags(includes='zergSwarm')
+temporarilyAddTags: zergSwarm
+
+[hiddenAction_notSwarm]
+autoTrigger: if not self.hasUnitInTeam(withTag='swarm',withinRange=120) and self.tags(includes='zergSwarm')
+temporarilyRemoveTags: zergSwarm
+
+[hiddenAction_consume_debuff]
+autoTriggerOnEvent: newMessage(withTag="consume")
+takeResources: energy=-50
+takeResources_includeUnitsWithinRange: 100
+takeResources_discardCollected: true
+takeResources_includeReference: eventSource
+addResources:hp=-9999
+spawnEffects:CUSTOM:consume
+
+[effect_consume]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 180
+alpha: 18
+image:ROOT:/DATA/Zerg/consume.png
+priority: critical
+drawUnderUnits:false
+total_frames:18
+animateFrameStart:0
+animateFrameEnd:17
+animateFrameSpeed:0.2
+frame_width:  73
+frame_height: 69
+
+[effect_cloud]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 70
+alpha: 7
+hSpeed: 0
+image:ROOT:/DATA/Zerg/units/cloud.png
+priority: critical
+drawUnderUnits:false
+total_frames:7
+animateFrameStart:0
+animateFrameEnd:6
+animateFrameSpeed:0.2
+scaleFrom:1
+scaleTo: 1
+
+[action_burrow]
+alwaysSinglePress:true
+isVisible: true
+isActive: if self.resource.maelstrom<=0 and self.resource.stasis<=0
+displayType: upgrade
+price:  0
+text_ru: Выкопаться
+text: Dig up
+buildSpeed: 0s
+highPriorityQueue: true
+ai_isDisabled:true
+iconImage:ROOT:/DATA/Zerg/unburrow.png
+playSoundAtUnit:ROOT:/DATA/Zerg/lurk2.ogg:0.3
+pos: 0.1
+alsoQueueAction:burrow_2
+allowMultipleInQueue:false
+clearAllWaypoints:true
+addWaypoint_type: attackmove
+addWaypoint_prepend: true
+addWaypoint_position_offsetFromSelf:0,0
+spawnEffects:CUSTOM:cloud
+
+[hiddenAction_burrow_2]
+isVisible: false
+displayType: upgrade
+price:  0
+highPriorityQueue: true
+whenBuilding_playAnimation:burrow
+whenBuilding_cannotMove:true
+canPlayerCancel:false
+
+[hiddenAction_detect]
+isVisible: false
+isActive:false
+autoTrigger: if not numberOfUnitsInEnemyTeam(withTag='detector',withinRange=320,greaterThan=0)
+displayType: upgrade
+price:  0
+buildSpeed: 0s
+highPriorityQueue: true
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+isFixedFiring: true
+turretSize: 6
+turretTurnSpeed: 3
+maxAttackRange:0
+shootDelay: 2s
+
+[movement]
+movementType: LAND
+moveSpeed: 0
+moveAccelerationSpeed: 0.07
+moveDecelerationSpeed: 0.12
+maxTurnSpeed: 6.5
+turnAcceleration: 0.4
+reverseSpeedPercentage:0
+joinsGroupFormations: false
+
+[ai]
+buildPriority: 0.8
+noneInBaseExtraPriority: 0.8
+noneGlobalExtraPriority: 0.8
+maxEachBase: 10
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true

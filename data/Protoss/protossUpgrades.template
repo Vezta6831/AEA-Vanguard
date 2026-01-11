@@ -1,0 +1,11 @@
+[global_resource_ProtossGroundAttack]
+hidden:true
+
+[global_resource_ProtossAirAttack]
+hidden:true
+
+[global_resource_ProtossGroundArmor]
+hidden:true
+
+[global_resource_ProtossAirArmor]
+hidden:true

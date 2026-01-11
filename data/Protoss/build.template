@@ -1,0 +1,142 @@
+[core]
+copyFrom:ROOT:/DATA/total/debuffs.template
+tags:building, buildingPortal, haveShield
+class: CustomUnitMetadata
+mass: 9000
+shieldRegen:0.01
+startShieldAtZero:false
+shieldDisplayOnlyDeflection:true
+armour:1
+energyRegen:0
+buildSpeed:0s
+hideScorchMark: true
+fogOfWarSightRange:8
+techLevel: 1
+selfBuildRate:1
+isBuilder: true
+nanoRange: 0
+isBuilding: true
+isBio: true
+isUnrepairableUnit:true
+effectOnDeath: CUSTOM:corpse
+
+[placementRule_farFromPylon]
+searchTags: pylon
+searchDistance: 300
+minCount: 1
+cannotPlaceMessage_ru: Ты должен строить рядом с пилоном
+cannotPlaceMessage: You must build near a pylon
+searchTeam: own
+
+
+
+[hiddenAction_soundOnCreate]
+autoTriggerOnEvent: created
+playSoundToPlayer:ROOT:/DATA/Protoss/spawn.ogg:0.3
+playAnimation:create
+
+[action_clear]
+isVisible:true
+isActive:true
+buildSpeed:1s
+price:0
+text_ru:Уничтожить
+text:Delete
+iconImage:ROOT:/DATA/total/delete.png
+ai_isDisabled:true
+
+[hiddenAction_life_Time]
+autoTrigger: if self.energy(empty=true)
+spawnEffects:CUSTOM:flash
+
+[effect_corpse]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 60
+alpha: 6
+image: ROOT:/DATA/Protoss/portalExplode.png
+priority: critical
+drawUnderUnits: true
+total_frames:6
+animateFrameStart:0
+animateFrameEnd:5
+animateFrameSpeed:0.2
+frame_width:  152
+frame_height: 152
+
+[effect_flash]
+yOffsetRelative:0
+alwayStartDirAtZero:true
+attachedToUnit: false
+showInFog:false
+life: 20
+alpha: 2
+image: ROOT:/DATA/Protoss/flash.png
+priority: critical
+drawUnderUnits:false
+total_frames:2
+animateFrameStart:0
+animateFrameEnd:1
+animateFrameSpeed:0.15
+alsoPlaySound:ROOT:/DATA/Protoss/buildEnd.ogg:0.3
+
+[graphics]
+imageScale: 1
+image: ROOT:/DATA/Protoss/build.png
+animation_idle_start: 6
+animation_idle_end: 11
+animation_idle_speed: 2
+drawLayer:experimentals
+showEnergyBar:false
+frame_width:  152
+frame_height: 152
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+maxAttackRange: 0
+
+[movement]
+movementType: NONE
+
+[animation_create]
+body_0s: {frame:0}
+body_0.075s: {frame:0}
+body_0.15s: {frame:1}
+body_0.225s: {frame:2}
+body_0.3s: {frame:3}
+body_0.375s: {frame:4}
+body_0.45s: {frame:5}
+body_0.525s: {frame:5}
+
+[hiddenAction_debuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[decal_ensnare_goo]
+@copyFrom_skipThisSection: true
+
+[decal_plague_goo]
+image:ROOT:/DATA/total/plague_goo_3.png

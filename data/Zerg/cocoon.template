@@ -1,0 +1,144 @@
+[core]
+copyFrom:ROOT:/DATA/total/debuffs.template
+class: CustomUnitMetadata
+armour:1
+mass:90000
+energyRegen: 0
+hideScorchMark: true
+fogOfWarSightRange:8
+techLevel: 1
+buildSpeed: 1
+selfBuildRate: 1
+isBuilder: true
+nanoRange: 0
+isBuilding: true
+isBio: true
+numBitsOnDeath: 12
+isUnrepairableUnit: true
+effectOnDeath: CUSTOM:corpse
+
+[hiddenAction_baseAttack]
+requireConditional: if self.resource(type='baseAttack',lessThan=1)
+autoTriggerOnEvent: tookDamage
+resourceAmount: baseAttack
+resourceAmount_setValue: 30
+
+[hiddenAction_soundOnCreate]
+autoTriggerOnEvent: created
+playAnimation:create
+
+[action_clear]
+isVisible:true
+isActive:true
+buildSpeed:1s
+price:0
+text_ru:Уничтожить
+text:Delete
+iconImage:ROOT:/DATA/total/delete.png
+ai_isDisabled:true
+highPriorityQueue: true
+
+[effect_corpse]
+alwayStartDirAtZero:true
+attachedToUnit: false
+showInFog:false
+life: 120
+alpha: 12
+image:ROOT:/DATA/Zerg/death.png
+priority: critical
+drawUnderUnits:false
+total_frames:12
+animateFrameStart:0
+animateFrameEnd:11
+animateFrameSpeed:0.2
+alsoPlaySound:ROOT:/DATA/Zerg/vomit.ogg
+frame_width:  200
+frame_height: 200
+
+[hiddenAction_life_Time]
+autoTrigger: if self.energy(empty=true)
+
+[effect_buildEnd]
+alwayStartDirAtZero:true
+attachedToUnit: false
+showInFog:false
+life: 30
+alpha: 3
+image:ROOT:/DATA/Zerg/buildEnd.png
+priority: critical
+drawUnderUnits:false
+total_frames:3
+animateFrameStart:0
+animateFrameEnd:2
+animateFrameSpeed:0.2
+alsoPlaySound:ROOT:/DATA/Zerg/buildEnd.wav:0.3
+
+[graphics]
+imageScale: 1
+image:ROOT:/DATA/Zerg/cocoon.png
+image_back:   NONE
+image_wreak:ROOT:/DATA/Zerg/dead.png
+image_turret: NONE
+drawLayer:experimentals
+showEnergyBar:false
+image_shadow:ROOT:/DATA/Zerg/shadow_cocoon.png
+image_shadow_frames:true
+shadowOffsetX:0
+shadowOffsetY:0
+animation_idle_start: 3
+animation_idle_end: 8
+animation_idle_speed: 7
+frame_width:  160
+frame_height: 192
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+maxAttackRange: 0
+
+[movement]
+movementType: NONE
+
+[ai]
+buildPriority: 0.09
+noneInBaseExtraPriority: 0.09
+noneGlobalExtraPriority: 0.09
+recommendedInEachBaseNum: 1
+
+[animation_create]
+body_0s: {frame:0}
+body_0.1s: {frame:1}
+body_0.2s: {frame:2}
+body_0.3s: {frame:2}
+
+[hiddenAction_debuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[decal_ensnare_goo]
+@copyFrom_skipThisSection: true
+
+[decal_plague_goo]
+image:ROOT:/DATA/total/plague_goo_3.png

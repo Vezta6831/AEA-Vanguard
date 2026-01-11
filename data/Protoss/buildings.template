@@ -1,0 +1,53 @@
+[core]
+copyFrom:ROOT:/DATA/total/debuffs.template
+
+[template_light]
+layer: afterBody
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+isVisible: if self.lastConverted<=1.9
+frame: select(self.lastConverted<=1.05,self.lastConverted*20%22,21)
+#frameStart+self.lastConverted*framesPerSec%totalFrames
+alpha: 1.8-(self.lastConverted*0.85)
+onlyWhileAlive: true
+
+[template_fire]
+layer: beforeUI
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+frame_width:64
+frame_height:96
+#frameStart+self.timeAlive*framesPerSec%totalFrames
+onlyWhileAlive: true
+
+[hiddenAction_debuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_ensnare]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_lockdown]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_stasis]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_debuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[hiddenAction_removeDebuff_maelstrom]
+@copyFrom_skipThisSection: true
+
+[decal_ensnare_goo]
+@copyFrom_skipThisSection: true
+
+[decal_plague_goo]
+image:ROOT:/DATA/total/plague_goo_3.png
