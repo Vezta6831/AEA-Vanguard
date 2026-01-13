@@ -1,6 +1,6 @@
 [mod]
 title: AEA Vanguard V5.1
-description: [REQUIRES GAME VERSION 1.15] AEA. Black Guard Corporation. EK Engineering. TRTL Mercenary Company. The races of the Koprulu sector.  These factions collide in an all out battle for ultimate supremecy over the 100 worlds. Who will conquer over all? Pick your faction wisely Recruit, the war has just begun. 
+description: [REQUIRES GAME VERSION 1.15] 
 tags: Units
 minVersion: 1.15p11
 thumbnail: mod-thumbnail.png
