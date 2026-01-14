@@ -32,7 +32,7 @@ displayRemainingStockpile: true
 highPriorityQueue: true
 onlyOneUnitAtATime: true
 
-iconImage: ROOT:_EKE_\Airstrikes\orbital Strikes\icon2_jammer.png
+iconImage: ROOT:_EKE_\Airstrikes\Orbital_Strikes\icon2_jammer.png
 
 [action_nanoBeam]
 @copyFromSection: template_noJacas
@@ -52,7 +52,7 @@ buildSpeed: 1s
 pos: 1.1
 highPriorityQueue: true
 onlyOneUnitAtATime: true
-iconImage: ROOT:_EKE_\Airstrikes\orbital Strikes\icon2_nano.png
+iconImage: ROOT:_EKE_\Airstrikes\Orbital_Strikes\icon2_nano.png
 addActionCooldownTime: 60s
 allowMultipleInQueue: false
 

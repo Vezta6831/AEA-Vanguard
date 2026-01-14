@@ -27,7 +27,7 @@ text_zh: 空中支援[方向下]
 description_zh: 向目标位置投掷炸弹\n-造成800点伤害，区域半径75\n-投放范围360
 text_zh: 空中支援[方向下]
 description_zh: 向目标位置投掷炸弹\n-造成800点伤害，区域半径75\n-投放范围360
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\down.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\down.png
 displayType: action
 buildSpeed: 1.7s
 pos: 1.1
@@ -64,7 +64,7 @@ text_zh: 空中支援[方向上]
 description_zh: 向目标位置投掷炸弹\n-造成800点伤害，区域半径75\n-投放范围360
 
 
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\up.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\up.png
 displayType: action
 buildSpeed: 1.3s
 pos: 1.1
@@ -100,7 +100,7 @@ description_ru: Направление: сверху-вниз\n- Соверша�
 text_zh: 垂直地毯轰炸
 description_zh: 地毯轰炸垂直直线\n-根据炸弹击中的位置，一条直线的轰炸量为375至755伤害 \n-释放范围360
 
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\bommba - Copy.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\bommba - Copy.png
 displayType: action
 buildSpeed: 1s
 pos: 1.1
@@ -135,7 +135,7 @@ description_ru: Направление: справа-налево\n- Совер�
 text_zh: 水平地毯轰炸
 description_zh: 水平轰炸直线\n-根据炸弹击中的位置，一条直线的轰炸量为375至755伤害 \n-释放范围360
 
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\bommba.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\bommba.png
 displayType: action
 buildSpeed: 1s
 pos: 1.1
@@ -170,7 +170,7 @@ text_ru: ПВО Удар
 description_ru: - Запускает быструю группу ракет в указанную область\n- В общем ракеты наносят 1050 урона\n Радиус вызова: 360
 text_zh: 反空军
 description_zh: 在目标区域快速发射一组导弹\n-每枚导弹的射程约为200伤害\n-释放范围360
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\RADIO\antiair.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\RADIO\antiair.png
 displayType: action
 buildSpeed: 1.3s
 pos: 1.1
@@ -203,7 +203,7 @@ text_ru: Напалм
 description_ru: - Сбрасывает бомбу с напалмом, поджигающую местность,\nнанося постепенныйй урон со временем\n- Имеет пониженный урон по зданиям\n- Не атакует воздушную технику, но способен атаковать подводную\nРадиус вызова: 360
 text_zh: 凝固汽油弹
 description_zh: 燃烧大的目标区域，随着时间的推移造成轻微破坏\n-减少对建筑的损坏
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\napalm.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\napalm.png
 displayType: action
 buildSpeed: 2s
 pos: 1.1
@@ -237,7 +237,7 @@ text_ru: Разрушитель Бункеров
 description_ru: - Наносит 7000 урона по строениям\n- Неэффективен против техники\n- Радиус вызова: 360
 text_zh: 碉堡克星
 description_zh: 对建筑物造成7000伤害\n-对单位无效\n-释放范围360
-iconImage: ROOT:_EKE_\Airstrikes\bombing runs\target.png
+iconImage: ROOT:_EKE_\Airstrikes\Bombing_Runs\target.png
 displayType: action
 buildSpeed: 5s
 allowMultipleInQueue: false
