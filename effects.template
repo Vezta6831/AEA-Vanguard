@@ -1,66 +1,56 @@
 
 [core]
-copyFrom:ROOT:effects/rocketmech.template, ROOT:effects/explosions.template, ROOT:effects/flares.template, ROOT:effects/trails.template, ROOT:effects/water.template, ROOT:effects/plasma.template, ROOT:effects/muzzle.template, ROOT:effects/healing.template, ROOT:effects/chrono.template
-
-#-----------------------------------------Bug effect------------------------------------
-#Test paul if i realy here | reply: um Ok, looks fine
+copyFrom: ROOT:effects/rocketmech.template, ROOT:effects/explosions.template, ROOT:effects/flares.template, ROOT:effects/trails.template, ROOT:effects/water.template, ROOT:effects/plasma.template, ROOT:effects/muzzle.template, ROOT:effects/healing.template, ROOT:effects/chrono.template
 
 
 [effect_sporesmoke]
-priority:veryhigh
-createWhenOffscreen: true
-showInFog: true
-image: SHARED:light_50.png
-
-life: 500
-fadeOut: true
-attachedToUnit: false
-color: #98AA72
-fadeInTime: 100
-fadeOut: true
-scaleFrom: 2
-scaleTo: 28
-alpha: 0.15
-drawUnderUnits:false
-xOffsetRelative: 0
-yOffsetRelative: 0
-xSpeedAbsoluteRandom:0.15
-ySpeedAbsoluteRandom:0.15
-xSpeedAbsolute: 0
-
-atmospheric: false
-
-
-shadow:true
-imageShadow: SHADOW:SHARED:light_50.png
+alpha:                0.15
+atmospheric:          false
+attachedToUnit:       false
+color:                #98AA72
+createWhenOffscreen:  true
+drawUnderUnits:       false
+fadeInTime:           100
+fadeOut:              true
+fadeOut:              true
+image:                SHARED:light_50.png
+imageShadow:          SHADOW:SHARED:light_50.png
+life:                 500
+priority:             veryhigh
+scaleFrom:            2
+scaleTo:              28
+shadow:               true
+showInFog:            true
+xOffsetRelative:      0
+xSpeedAbsolute:       0
+xSpeedAbsoluteRandom: 0.15
+yOffsetRelative:      0
+ySpeedAbsoluteRandom: 0.15
 
 
 [effect_debris]
-priority:high
-createWhenOffscreen: false
-createWhenZoomedOut: false
-image: ROOT:shared/dust_sparse.png
-
-life: 480
-fadeOut: true
-attachedToUnit: false
-color: #7C9C38
-fadeInTime: 60
-scaleFrom: 3
-scaleTo: 3
-alpha: 1
-drawUnderUnits:false
-
-hSpeed: -0.4
-hOffset: 80
-dirOffsetRandom:360
-
-shadow:true
-imageShadow: SHADOW:ROOT:shared/dust_sparse.png
+alpha:                 1
+atmospheric:           true
+attachedToUnit:        false
+color:                 #7C9C38
+createWhenOffscreen:   false
+createWhenZoomedOut:   false
+dirOffsetRandom:       360
+drawUnderUnits:        false
+fadeInTime:            60
+fadeOut:               true
+hOffset:               80
+hSpeed:                -0.4
+image:                 ROOT:shared/dust_sparse.png
+imageShadow:           SHADOW:ROOT:shared/dust_sparse.png
+life:                  480
+priority:              high
+scaleFrom:             3
+scaleTo:               3
+shadow:                true
 xOffsetRelativeRandom: 200
+xSpeedAbsolute:        0.15
+xSpeedAbsoluteRandom:  0.15
 yOffsetRelativeRandom: 200
-xSpeedAbsolute: 0.15
-xSpeedAbsoluteRandom:0.15
-ySpeedAbsoluteRandom:0.15
-atmospheric: true
-#-----------------------------------------------------------------------------
+ySpeedAbsoluteRandom:  0.15
+
