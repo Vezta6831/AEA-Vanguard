@@ -1,8 +1,7 @@
-# AEA
-![icon](https://cdn.discordapp.com/attachments/711770374202982400/947819647326113822/aea-color.png)
-## Description
-AEA is a [Rusted Warfare](https://store.steampowered.com/app/647960/Rusted_Warfare__RTS/) Mod Pack with intents to
-enhance gameplay by balancing current units, all while adding new ones.
-## About the Author
-Skaarjlord is a balancer, not a modder. Most of the units used are not taken, but contributed from other authors on
-the steam workshop.
+A mod for **Rusted Warfare** that enhances the Vanilla experience with units and mechanics based on **AEA: Unlimited Warfare**. Most units at the moment are direct forks of existing units from **AEA: Unlimited Warfare** along with some extra tweaks and modifications; Down the road these units will be completely remade with different artwork and sounds. 
+The changes included are:
+
+* Rebalanced Units for Faster Pacing & more Time To Kill
+* Updated Artwork & Sounds (**WORK IN PROGRESS**)
+
+Unit and Stat rebalancing are constantly being monitored and modified to create the ultimate reworked experience. 
