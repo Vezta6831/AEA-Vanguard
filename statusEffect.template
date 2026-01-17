@@ -59,7 +59,7 @@ alwaysStartDirAtZero: true
 hOffset: 0
 alpha: 1
 total_frames: 1
-image: ROOT:_EKE_\Airstrikes\bombing runs\napalm.png
+image: ROOT:_EKE_\Airstrikes\Bombing_Runs\napalm.png
 onlyOnNonPreview: true
 imageScale: 0.13
 
