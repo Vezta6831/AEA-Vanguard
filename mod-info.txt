@@ -1,7 +1,7 @@
 [mod]
-title: AEA: Vanguard Edition V5.2
 description: [REQUIRES GAME VERSION 1.15] 
-tags: Units
-minVersion: 1.15p11
-thumbnail: mod-thumbnail.png
+minVersion:  1.15p11
+tags:        Units
+thumbnail:   mod-thumbnail.png
+title:       AEA: Vanguard Edition V5.3
 
