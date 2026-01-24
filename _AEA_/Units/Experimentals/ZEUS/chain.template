@@ -1,57 +1,63 @@
 [core]
-name: p_chainLightning_${number}
-
-copyFrom: weapon.template
-
-mass: 0
-price: 0
-maxHp: 1
-radius: 0
-canNotBeDamaged: true
+canNotBeDamaged:          true
 canNotBeDirectlyAttacked: true
-isUnselectable: true
+copyFrom:                 weapon.template
+isUnselectable:           true
+mass:                     0
+maxHp:                    1
+name:                     p_chainLightning_${number}
+price:                    0
+radius:                   0
+
 
 [graphics]
 image: invisible.png
 
+
 [attack]
-turretSize: 0
-turretTurnSpeed: 360
 turretMultiTargeting: true
+turretSize:           0
+turretTurnSpeed:      360
+
 
 [movement]
 movementType: NONE
 
+
 [template_ChainTurret]
-@copyFromSection: template_turret
-x: 0
-y: 0
+@copyFromSection:      template_turret
+delay:                 999
+limitingAngle:         45
+limitingMinRange:      20
+projectile:            lightning2
+turnSpeed:             360
 turnSpeedAcceleration: 100
-limitingAngle: 45
-limitingMinRange: 20
-warmup: 10
-delay: 999
-turnSpeed: 360
-projectile: lightning2
+warmup:                10
+x:                     0
+y:                     0
 
 
 [turret_fire_1]
 @copyFromSection: template_ChainTurret
-idleDir: 0
+idleDir:          0
+
 
 [turret_fire_2]
 @copyFromSection: template_ChainTurret
-idleDir: 90
+idleDir:          90
+
 
 [turret_fire_3]
 @copyFromSection: template_ChainTurret
-idleDir: 180
+idleDir:          180
+
 
 [turret_fire_4]
 @copyFromSection: template_ChainTurret
-idleDir: 270
+idleDir:          270
 
 
 [hiddenAction_delete]
 autoTrigger: if self.timeAlive(laterThanSeconds=3)
-deleteSelf: true
+deleteSelf:  true
+
