@@ -4,4 +4,5 @@ deleteSelf: true
 
 [hiddenAction_realmine]
 autoTiggeOnEvent: completeAndActive
-convertTo: landmineBuilt
+convertTo:        landmineBuilt
+
