@@ -15,7 +15,7 @@ isLockedAltMessage_zh: 空袭被禁用
 
 fireTurretXAtGround: kineticStrike
 displayRemainingStockpile: true
-price: 30000, uranium=1800, power=800
+price: 35000, uranium=1800, power=1000
 ai_isDisabled: true
 text: Kinetic Strike
 description: - Giant metal rod orbital dropped from the outer atmpsphere\n- 450 Targeting range\n- 8000 Area damage, 240 area radius
@@ -38,7 +38,7 @@ allowMultipleInQueue: false
 @copyFromSection: template_noJacas
 
 fireTurretXAtGround: dysonBeam
-price: 275000, uranium=20000, power=3000
+price: 300000, uranium=20000, power=3000
 ai_isDisabled: true
 text: Nicoll Dyson Beam
 description: \n-Solar energy directed and focused into a narrow beam by an array of satellites \n-Lasts for 10 seconds before dissapearing \n-Can be given orders to redirect the beam
