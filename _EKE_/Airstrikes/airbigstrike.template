@@ -38,7 +38,7 @@ allowMultipleInQueue: false
 @copyFromSection: template_noJacas
 
 fireTurretXAtGround: dysonBeam
-price: 300000, uranium=20000, power=3000
+price: 350000, uranium=20000, power=3000
 ai_isDisabled: true
 text: Nicoll Dyson Beam
 description: \n-Solar energy directed and focused into a narrow beam by an array of satellites \n-Lasts for 10 seconds before dissapearing \n-Can be given orders to redirect the beam
