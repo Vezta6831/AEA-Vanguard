@@ -1,3 +1,6 @@
+[core]
+@global portrait_num:9999
+
 [action_portrait]
 isVisible:true
 isActive:false
@@ -8,3 +11,21 @@ buildSpeed: 0s
 allowMultipleInQueue:false
 isAlsoViewableByAllies:true
 isAlsoViewableByEnemies:true
+fireTurretXAtGround:nullPortrait
+fireTurretXAtGround_withProjectile:nullPortrait
+
+[turret_nullPortrait]
+x: 0
+y: 0
+limitingRange:${portrait_num}
+recoilOffset: 0
+shoot_flame:NONE
+showRangeUIGuide:false
+canAttackCondition: if self.globalTeamTags(includes='GOVNO')
+
+[projectile_nullPortrait]
+directDamage: 0
+life: 0
+speed: 0
+invisible:true
+explodeEffect:NONE

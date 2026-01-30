@@ -1,9 +1,21 @@
 [core]
+armour:0
 maxShield:0
 shieldRegen:0
 shieldDisplayOnlyDeflection:true
 autoTriggerCooldownTime: 0.1s
-@memory mStatus: float
+@memory mStatus:float
+@memory acidSpores:float
+@memory armour:float
+@memory shieldArmour:float
+@memory psionicStormTimer:float
+
+@global minShield:3
+@global hallucinationUnit:builder_deleted
+@global hallucinationTimeAlive:58
+@global supplyAdd:2
+
+@global attackLoS: ((createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInTeam(withTag="vis17",withinRange=310)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInAllyTeam(withTag="vis17",withinRange=310)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInTeam(withTag="vis24",withinRange=460)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInAllyTeam(withTag="vis24",withinRange=460)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInTeam(withTag="vis8",withinRange=140)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInAllyTeam(withTag="vis8",withinRange=140)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInTeam(withTag="vis6",withinRange=100)>0) or (createMarker(x=attacking.x,y=attacking.y,teamId=self.teamId).numberOfUnitsInAllyTeam(withTag="vis6",withinRange=100)>0))
 
 [attack]
 canOnlyAttackUnitsWithoutTags: stasis
@@ -14,11 +26,65 @@ setUnitStats: mass=select(self.speed<=0,9999999,${core.mass})
 setUnitMemory: mStatus=select(self.speed<=0,1,2)
 
 
+[hiddenAction_onDestroyed_nonHallucination]
+autoTriggerOnEvent:destroyed
+requireConditional: if self.resource.hallucination==0
+
+
+
+[hiddenAction_haveShield_addTag]
+autoTrigger: if self.shield>=20 and not self.tags(includes="haveShield")
+temporarilyAddTags:haveShield
+setUnitMemory: armour=0, shieldArmour=0
+setUnitStats: armour=0
+
+[hiddenAction_haveShield_removeTag]
+autoTrigger: if self.shield<20 and self.tags(includes="haveShield")
+temporarilyRemoveTags:haveShield
+setUnitMemory: armour=0, shieldArmour=0
+setUnitStats: armour=select(self.resource.hallucination==0,${core.armour},0)
+
+
+[hiddenAction_transport_sendMessage]
+autoTrigger: if self.hasActiveWaypoint(type="loadInto") and (activeWaypointTarget.tags(includes="shuttle") or activeWaypointTarget.tags(includes="dropship") or activeWaypointTarget.tags(includes="overlord")) and ((not activeWaypointTarget.hasActiveWaypoint and not activeWaypointTarget.isMoving) or (activeWaypointTarget.hasActiveWaypoint(type="touchTarget") and distanceBetween(activeWaypointTarget.activeWaypointTarget,activeWaypointTarget)>distanceBetween(self,activeWaypointTarget)))
+sendMessageTo: activeWaypointTarget
+sendMessageWithTags:moveTransport
+
+
+[template_set_armour]
+@define additionalUpgrade:0
+autoTrigger: if memory.armour!=self.resource.${armourUpgradeType} and self.shield<${minShield} and self.resource.hallucination==0
+setUnitStats: armour=${core.armour}+self.resource.${armourUpgradeType}+${additionalUpgrade}
+setUnitMemory: armour=self.resource.${armourUpgradeType}
+
+[template_set_shieldArmour]
+autoTrigger: if ((memory.armour!=self.resource.${armourUpgradeType} and self.shield<${minShield}) or (memory.shieldArmour!=self.resource.ProtossShieldArmor and self.shield>=${minShield})) and self.resource.hallucination==0
+setUnitStats: armour=select(self.shield<${minShield},${core.armour}+self.resource.${armourUpgradeType},select(self.shield>=${minShield},self.resource.ProtossShieldArmor,0))
+setUnitMemory: armour=select(self.shield<${minShield},self.resource.${armourUpgradeType},0), shieldArmour=select(self.shield>=${minShield},self.resource.ProtossShieldArmor,0)
+
+
+[hiddenAction_swarm]
+autoTrigger: if self.numberOfUnitsInNeutralTeam(withTag='swarm',withinRange=120)>0 and not self.tags(includes='zergSwarm') and self.height==0 and not self.tags(includes='building')
+temporarilyAddTags: zergSwarm
+
+[hiddenAction_notSwarm]
+autoTrigger: if self.numberOfUnitsInNeutralTeam(withTag='swarm',withinRange=120)==0 and self.tags(includes='zergSwarm')
+temporarilyRemoveTags: zergSwarm
+
+[hiddenAction_debuff_psistorm]
+autoTriggerOnEvent:tookDamage(withTag="psionicStorm")
+requireConditional: if not self.tags(includes="building") and self.resource.hallucination==0 and self.resource.stasis==0 and self.timeAlive-memory.psionicStormTimer>=0.33
+setUnitMemory:psionicStormTimer=self.timeAlive
+addResourcesWithLogic: hp=-1*select(self.shield>=14,0,14-self.shield), shield=-14
+
+[hiddenAction_debuff_nukeDamage]
+autoTriggerOnEvent:tookDamage(withTag="nuke")
+addResourcesWithLogic: hp=-1*select(self.shield>=max((self.maxHp+self.maxShield)*2/3,500),0,max((self.maxHp+self.maxShield)*2/3,500)-self.shield), shield=-1*max((self.maxHp+self.maxShield)*2/3,500)
 
 [hiddenAction_debuff_ensnare]
 autoTrigger: if self.resource.ensnare>0
 temporarilyAddTags: ensnare
-addResources:ensnare=-0.1
+setResourcesWithLogic:ensnare=min(self.resource.ensnare-0.1,25)
 setUnitStats: moveSpeed=${movement.moveSpeed}*0.5, shootDelayMultiplier=1.18
 
 [hiddenAction_removeDebuff_ensnare]
@@ -27,13 +93,25 @@ setResourcesWithLogic:ensnare=0
 resetToDefaultTags:true
 resetUnitStats:true
 
+[hiddenAction_debuff_acidSpores]
+autoTrigger: if self.resource.acidSpores>0 or memory.acidSpores>0
+addResources:acidSpores=-0.1
+setResourcesWithLogic: acidSpores=min(self.resource.acidSpores,450)
+setUnitStats: shootDelayMultiplier+=0.125*(self.resource.acidSpores-memory.acidSpores)/50
+alsoTriggerAction:debuff_acidSpores_2
+
+[hiddenAction_debuff_acidSpores_2]
+setUnitMemory: acidSpores=memory.acidSpores+(self.resource.acidSpores-memory.acidSpores)
+
+[hiddenAction_debuff_acidSpores_damage]
+autoTriggerOnEvent:tookDamage
+requireConditional: if self.resource.acidSpores>0
+addResourcesWithLogic: shield=-0.5*min(self.resource.acidSpores/50,9), hp=-0.5*select(self.shield>=min(self.resource.acidSpores/50,9),0,int(min(self.resource.acidSpores/50,9))-self.shield)
+
 [hiddenAction_debuff_plague]
 autoTrigger: if self.resource.plague>0
-addResources:plague=-0.1
-takeResources:hp=6
-takeResources_discardCollected: true
-takeResources_includeReference: self
-takeResources_includeUnitsWithinRange:50
+addResourcesWithLogic: hp=select(self.hp-1.18>=1,-1.18,0)
+setResourcesWithLogic:plague=min(self.resource.plague-0.1,25)
 
 [hiddenAction_buff_defensive_matrix]
 autoTrigger: if self.resource.d_matrix>0 and not self.tags(includes="matrix")
@@ -42,7 +120,7 @@ setUnitStats: maxShield=${core.maxShield}+250, shieldRegen=0, shield+=250
 
 [hiddenAction_buff_defensive_matrix_2]
 autoTrigger: if self.resource.d_matrix>0
-addResources:d_matrix=-0.1
+setResourcesWithLogic:d_matrix=min(self.resource.d_matrix-0.1,57)
 
 [hiddenAction_buff_defensive_matrix_3]
 autoTrigger: if (self.resource.d_matrix<=0 or self.shield<=${core.maxShield}) and self.tags(includes="matrix")
@@ -54,7 +132,7 @@ setResourcesWithLogic: d_matrix=0
 autoTrigger: if self.resource.lockdown>0
 clearAllWaypoints:true
 temporarilyAddTags: lockdown
-addResources:lockdown=-0.1
+setResourcesWithLogic:lockdown=min(self.resource.lockdown-0.1,44)
 setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
 
 [hiddenAction_removeDebuff_lockdown]
@@ -64,9 +142,66 @@ resetUnitStats:true
 
 [hiddenAction_mindControl_debuff]
 autoTriggerOnEvent: newMessage(withTag="MindControl")
+requireConditional: if self.resource.hallucination==0
 switchToTeam: eventSource.teamId
 clearAllWaypoints:true
 spawnEffects:CUSTOM:mindControl
+
+[hiddenAction_hallucination_spawnCopy]
+autoTriggerOnEvent: newMessage(withTag="Hallucination")
+spawnUnits: ${hallucinationUnit}(offsetRandomX=30, offsetRandomY=30, offsetRandomDir=360, addResources=hallucination:1), ${hallucinationUnit}(offsetRandomX=30, offsetRandomY=30, offsetRandomDir=360, addResources=hallucination:1)
+
+[effect_hallucination_spawn]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 180
+alpha: 18
+image: ROOT:/DATA/total/hallucination_spawn.png
+priority: critical
+drawUnderUnits: false
+total_frames:18
+animateFrameStart:0
+animateFrameEnd:17
+animateFrameSpeed:0.24
+frame_width:  64
+frame_height: 64
+
+[hiddenAction_hallucination_onCreated]
+autoTriggerOnEvent: created
+requireConditional: if self.resource.hallucination>0
+temporarilyAddTags: hallucination
+temporarilyRemoveTags: bunkerBio, haveEnergy, arbiter, detector, detectorRange, darkTemplar, highTemplar
+setUnitStats: armour=0, shootDamageMultiplier=0, maxEnergy=0
+addResources: supply=${supplyAdd},displaySupply=-${supplyAdd}
+spawnEffects:CUSTOM:hallucination_spawn
+
+[hiddenAction_hallucination_onDestroyed]
+autoTriggerOnEvent: destroyed
+requireConditional: if self.resource.hallucination>0
+addResources: supply=-${supplyAdd},displaySupply=${supplyAdd}
+spawnEffects:CUSTOM:hallucination_death
+
+[hiddenAction_hallucination_endLifeTime]
+autoTrigger: if self.resource.hallucination>0 and (self.timeAlive>=${hallucinationTimeAlive} or self.resource.ensnare>0 or self.resource.acidSpores>0 or self.resource.plague>0 or self.resource.d_matrix>0 or self.resource.lockdown>0 or self.resource.maelstrom>0 or self.resource.stasis>0)
+autoTriggerOnEvent: newMessage(withTag="MindControl"), newMessage(withTag="Restoration")
+requireConditional: if self.resource.hallucination>0
+deleteSelf:true
+spawnEffects:CUSTOM:hallucination_death
+
+[effect_hallucination_death]
+alwayStartDirAtZero:true
+attachedToUnit: false
+life: 130
+alpha: 13
+image: ROOT:/DATA/Protoss/units/death.png
+priority: critical
+drawUnderUnits: true
+total_frames:13
+animateFrameStart:0
+animateFrameEnd:12
+animateFrameSpeed:0.2
+frame_width:  78
+frame_height: 65
 
 [hiddenAction_feedback_debuff]
 autoTriggerOnEvent: newMessage(withTag="Feedback")
@@ -77,7 +212,7 @@ spawnEffects:CUSTOM:feedback
 autoTrigger: if self.resource.maelstrom>0
 clearAllWaypoints:true
 temporarilyAddTags: maelstrom
-addResources:maelstrom=-0.1
+setResourcesWithLogic:maelstrom=min(self.resource.maelstrom-0.1,7.5)
 setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
 
 [hiddenAction_removeDebuff_maelstrom]
@@ -89,7 +224,7 @@ resetUnitStats:true
 autoTrigger: if self.resource.stasis>0
 clearAllWaypoints:true
 temporarilyAddTags: stasis
-addResources:stasis=-0.1
+setResourcesWithLogic:stasis=min(self.resource.stasis-0.1,44)
 setUnitStats: moveSpeed=0, maxTurnSpeed=0, maxAttackRange=0, mass=999999999, shootDelayMultiplier=0, shootDamageMultiplier=0
 
 [hiddenAction_removeDebuff_stasis]
@@ -99,15 +234,51 @@ resetUnitStats:true
 
 [hiddenAction_restoration_buff]
 autoTriggerOnEvent: newMessage(withTag="Restoration")
-setResourcesWithLogic: ensnare=0, plague=0, lockdown=0
+requireConditional: if self.resource.hallucination==0
+setResourcesWithLogic: ensnare=0, plague=0, lockdown=0, acidSpores=0, maelstrom=0
 spawnEffects:CUSTOM:restoration
+
+[template_hallucination_texture]
+@define dir0: (self.dir>=-22.5 and self.dir<=22.5)
+@define dir45: (self.dir>=22.5 and self.dir<=67.5)
+@define dir90: (self.dir>=67.5 and self.dir<=112.5)
+@define dir135: (self.dir>=112.5 and self.dir<=157.5)
+@define dir180: ((self.dir>=157.5 and self.dir<=180) or (self.dir<=-157.5 and self.dir>=-180))
+@define dir225: (self.dir<=-112.5 and self.dir>=-157.5)
+@define dir270: (self.dir<=-67.5 and self.dir>=-112.5)
+@define dir315: (self.dir<=-22.5 and self.dir>=-67.5)
+@define totalFrames:1
+@define hallucination_visible_ally: if self.resource.hallucination>0
+@define hallucination_visible_enemy: if self.resource.hallucination>0 and (numberOfUnitsInEnemyTeam(withTag='detector',withinRange=320)>0 or numberOfUnitsInEnemyTeam(withTag='detectorRange',withinRange=440)>0)
+isVisible: ${hallucination_visible_ally}
+layer: afterBody
+image:${graphics.image}
+frame_width:  ${graphics.frame_width}
+frame_height: ${graphics.frame_height}
+onlyOnNonPreview:false
+alwaysStartDirAtZero:true
+onlyWhileAlive:true
+teamColors:false
+yOffsetAbsolute:${graphics.image_offsetY}
+frame: select(${dir0},4,select(${dir45},5,select(${dir90},6,select(${dir135},7,select(${dir180},0,select(${dir225},1,select(${dir270},2,select(${dir315},3,0))))))))*${totalFrames}
+addBodyFrameMultipliedBy:1
+onlyTeam:ally
+
+[decal_hallucination_energy]
+#@copyFromSection: template_customBar
+@define totalFrames:10
+isVisible: if self.resource.hallucination>0
+onlyWhenSelectedByOwnPlayer:true
+onlyWhenSelectedByAnyPlayer:false
+frame:max(0,int(((${hallucinationTimeAlive}-self.timeAlive)*100/${hallucinationTimeAlive})/(100/${totalFrames})))
+onlyWhileAlive:true
 
 [decal_ensnare_goo]
 @define frameStart: 0
 @define totalFrames:4
 @define framesPerSec: 12
 isVisible: if self.resource.ensnare>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/ensnare_goo.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -117,12 +288,28 @@ total_frames:4
 frame: ${frameStart}+self.timeAlive*${framesPerSec}%${totalFrames}
 onlyWhileAlive: true
 
+[decal_acidSpores]
+@define frameStart: 0
+@define totalFrames:4
+@define framesPerSec: 12
+isVisible: if self.resource.acidSpores>0
+layer: afterBody
+image:ROOT:/DATA/total/acidSpores_S.png
+onlyOnNonPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+yOffsetAbsolute:-10
+frame_width:23
+frame_height:25
+frame: select(self.resource.acidSpores<=450/4*1,0,select(self.resource.acidSpores<=450/4*2,4,select(self.resource.acidSpores<=450/4*3,8,12)))+(self.timeAlive*${framesPerSec}%${totalFrames})
+onlyWhileAlive: true
+
 [decal_plague_goo]
 @define frameStart: 0
 @define totalFrames:4
 @define framesPerSec: 12
 isVisible: if self.resource.plague>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/plague_goo.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -137,7 +324,7 @@ onlyWhileAlive: true
 @define totalFrames:5
 @define framesPerSec: 18
 isVisible: if self.resource.d_matrix>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/defensive_matrix.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -152,7 +339,7 @@ onlyWhileAlive: true
 @define totalFrames:6
 @define framesPerSec: 12
 isVisible: if self.resource.lockdown>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/lockdown.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -167,7 +354,7 @@ onlyWhileAlive: true
 @define totalFrames:7
 @define framesPerSec: 12
 isVisible: if self.resource.stasis>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/stasis.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -214,7 +401,7 @@ frame_height: 64
 @define totalFrames:12
 @define framesPerSec: 12
 isVisible: if self.resource.maelstrom>0
-layer: beforeUI
+layer: afterBody
 image:ROOT:/DATA/total/maelstrom.png
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
@@ -244,6 +431,9 @@ frame_height: 64
 [resource_ensnare]
 hidden:true
 
+[resource_acidSpores]
+hidden:true
+
 [resource_plague]
 hidden:true
 
@@ -257,4 +447,7 @@ hidden:true
 hidden:true
 
 [resource_stasis]
+hidden:true
+
+[resource_hallucination]
 hidden:true

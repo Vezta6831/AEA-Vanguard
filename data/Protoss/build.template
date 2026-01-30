@@ -1,6 +1,6 @@
 [core]
-copyFrom:ROOT:/DATA/total/debuffs.template
-tags:building, buildingPortal, haveShield
+copyFrom:ROOT:/DATA/total/debuffs.template, ROOT:/DATA/total/unit_portrait.template
+tags:building, buildingPortal, vis8
 class: CustomUnitMetadata
 mass: 9000
 shieldRegen:0.01
@@ -26,9 +26,26 @@ searchDistance: 300
 minCount: 1
 cannotPlaceMessage_ru: Ты должен строить рядом с пилоном
 cannotPlaceMessage: You must build near a pylon
+cannotPlaceMessage_zh:必须放置在能量场中
 searchTeam: own
 
 
+
+[placementRule_smallUnit]
+searchTags: groundUnit, undergroundZerg
+searchDistance: 20
+maxCount: 0
+cannotPlaceMessage_ru: Здесь нельзя строить!
+cannotPlaceMessage: You can't build it here!
+searchTeam: enemy
+
+[placementRule_largeUnit]
+searchTags: groundLargeUnit
+searchDistance: 35
+maxCount: 0
+cannotPlaceMessage_ru: Здесь нельзя строить!
+cannotPlaceMessage: You can't build it here!
+searchTeam: enemy
 
 [hiddenAction_soundOnCreate]
 autoTriggerOnEvent: created
@@ -39,10 +56,13 @@ playAnimation:create
 isVisible:true
 isActive:true
 buildSpeed:1s
+displayType:infoOnly
 price:0
 text_ru:Уничтожить
 text:Delete
-iconImage:ROOT:/DATA/total/delete.png
+text_zh:自毁
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/total/delete.png
 ai_isDisabled:true
 
 [hiddenAction_life_Time]
@@ -79,6 +99,9 @@ animateFrameStart:0
 animateFrameEnd:1
 animateFrameSpeed:0.15
 alsoPlaySound:ROOT:/DATA/Protoss/buildEnd.ogg:0.3
+
+[action_portrait]
+unitShownInUI:portrait_p_advisor
 
 [graphics]
 imageScale: 1

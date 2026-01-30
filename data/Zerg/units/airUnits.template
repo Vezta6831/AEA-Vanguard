@@ -3,31 +3,20 @@ copyFrom:ROOT:/DATA/total/forcesAttack.template
 class: CustomUnitMetadata
 mass: 500
 techLevel: 1
-hideScorchMark: false
+hideScorchMark: true
 isBio: true
 isBug: false
 isUnrepairableUnit: true
-selfRegenRate:0.01
+selfRegenRate:0.0062
 softCollisionOnAll: 250
 explodeOnDeath: false
 explodeOnDeathGroundCollosion: false
 effectOnDeath:CUSTOM:corpse
 fogOfWarSightRange:17
 
-[hiddenAction_armor]
-autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=0) and not self.tags(includes='armor1')
-temporarilyAddTags: armor1
-setUnitStats: armour+=1
-
-[hiddenAction_armor_2]
-autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=1) and not self.tags(includes='armor2')
-temporarilyAddTags: armor2
-setUnitStats: armour+=1
-
-[hiddenAction_armor_3]
-autoTrigger: if self.resource(type='ZergAirCarapace',greaterThan=2) and not self.tags(includes='armor3')
-temporarilyAddTags: armor3
-setUnitStats: armour+=1
+[hiddenAction_armour]
+@copyFromSection:template_set_armour
+@define armourUpgradeType: ZergAirCarapace
 
 [hiddenAction_consume_debuff]
 autoTriggerOnEvent: newMessage(withTag="consume")

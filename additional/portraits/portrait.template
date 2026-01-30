@@ -1,0 +1,38 @@
+[core]
+showInEditor: false
+showOnMinimap:false
+class: CustomUnitMetadata
+price:0
+maxHp: 0
+mass:0 
+buildSpeed: 0s
+radius: 0
+effectOnDeath:NONE
+hideScorchMark: true
+explodeOnDeath: false
+
+[graphics]
+image:SHARED:blank.png
+frame_width: ${int(decal_portrait.frame_width*0.4)}
+frame_height: ${int(decal_portrait.frame_height*0.4)}
+
+[attack]
+canAttack: false
+canAttackFlyingUnits: false
+canAttackLandUnits:   false
+canAttackUnderwaterUnits: false
+
+[movement]
+movementType: NONE
+
+[decal_portrait]
+@define frameStart: 0
+@define framesPerSec: 7.5
+isVisible: true
+layer: afterBody
+onlyInPreview:true
+alwaysStartDirAtZero:true
+teamColors:false
+frame_width:60
+frame_height:56
+frame: ${frameStart}+globalSearchForFirstUnit(withTag="advisor",relation="any").timeAlive*${framesPerSec}%${totalFrames}

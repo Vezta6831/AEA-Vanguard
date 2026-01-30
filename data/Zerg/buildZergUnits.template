@@ -2,8 +2,12 @@
 defineUnitMemory: float numLarvae, string unitType, unit rally
 
 [hiddenAction_spawnLarvae]
-autoTrigger: if memory.numLarvae<6 and self.customTimer>=14 and memory.unitType==null
+autoTrigger: if memory.numLarvae<3 and self.customTimer>=14 and memory.unitType==null
 spawnUnits:larva(offsetY=40,offsetRandomX=20)
+resetCustomTimer:true
+
+[hiddenAction_fullLarvae_resetTimer]
+autoTrigger: if memory.numLarvae>=3 and self.customTimer>=1
 resetCustomTimer:true
 
 [hiddenAction_addNumLarvae]
@@ -19,57 +23,65 @@ autoTriggerOnEvent: newMessage(withTag="removeUnitType")
 autoTrigger: if memory.unitType!=null and memory.numLarvae<=0
 setUnitMemory: unitType=null
 
-[action_selectLarvae]
-requireConditional: if self.resource(type='select',equalTo=0)
-isVisible: if self.resource(type='select',equalTo=0)
-isActive: if self.resource(type='select',equalTo=0) and memory.numLarvae>0
-displayType: queueUnit
-price: 0
-pos: 0
-text_ru: Личинка
-text: Larvae
-buildSpeed: 0
-ai_isDisabled: true
-iconImage:ROOT:/DATA/Zerg/larva_icon.png
-highPriorityQueue: true
-alwaysSinglePress:true
-resourceAmount: select
-resourceAmount_setValue: 1
-
 [action_rally]
 isVisible: if self.resource(type='select',equalTo=0)
 isActive: if self.resource(type='select',equalTo=0)
+displayType:infoOnly
 price: 0
 pos: 0
 text_ru: Точка сбора
 text: Rally point
+text_zh:集结点
 buildSpeed: 0
 ai_isDisabled: true
-iconImage:ROOT:/DATA/total/rallyIcon.png
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/total/rallyIcon.png
 highPriorityQueue: true
 fireTurretXAtGround:rally
 buildSpeed:0
 setUnitMemory:rally=thisActionTarget
 
+[action_selectLarvae]
+requireConditional: if self.resource(type='select',equalTo=0)
+isVisible: if self.resource(type='select',equalTo=0)
+isActive: if self.resource(type='select',equalTo=0) and memory.numLarvae>0
+displayType:infoOnly
+price: 0
+pos: 0
+text_ru: Личинка
+text: Larvae
+text_zh:幼虫
+buildSpeed: 0
+ai_isDisabled: true
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/Zerg/larva_icon.png
+highPriorityQueue: true
+alwaysSinglePress:true
+resourceAmount: select
+resourceAmount_setValue: 1
+
 [action_cancel]
 price:0
 pos:0
 buildSpeed:0
+displayType:infoOnly
 text_ru: Отмена
 text: Cancel
+text_zh:取消
 isVisible: if self.resource(type='select',greaterThan=0)
 isActive: if self.resource(type='select',greaterThan=0)
 resourceAmount: select
 resourceAmount_setValue: 0
-iconImage:ROOT:/DATA/total/cancel.png
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/total/cancel.png
 alwaysSinglePress:true
 
 [action_queueDrone]
 isVisible: if self.resource(type='select',equalTo=1)
 isActive: if memory.numLarvae>0 and self.resource(type='select',equalTo=1)
-displayType: action
-price: Minerals=75
 displayType: queueUnit
+price: Minerals=50, supply=1, displaySupply=-1
+addResources: Minerals=50, supply=1, displaySupply=-1
 text:
 description:
 textAddUnitName: ${section.unitShownInUI}
@@ -79,27 +91,27 @@ pos: 0.1
 buildSpeed: 0
 ai_isDisabled: true
 highPriorityQueue: true
-unitShownInUI: zdrone
-setUnitMemory: unitType="zdrone"
+unitShownInUI: drone
+setUnitMemory: unitType="drone"
 resourceAmount: select
 resourceAmount_setValue: 0
 
 [action_queueOverlord]
 @copyFromSection: action_queueDrone
 isLocked: IGNORE
-price: Minerals=50
-addResources: Minerals=50
+price: Minerals=100
+addResources: Minerals=100
 pos: 0.2
-unitShownInUI: zoverlord
-setUnitMemory: unitType="zoverlord"
+unitShownInUI: overlord
+setUnitMemory: unitType="overlord"
 
 [action_queueZergling]
 @copyFromSection: action_queueDrone
 isLocked: if not self.hasUnitInTeam(withTag='SpawningPool')
 isLockedMessage_ru:Требуется:\n  >Омут рождения
 isLockedMessage:Requires:\n  >Spawning pool
-price: Minerals=50
-addResources: Minerals=50
+price: Minerals=50, supply=1, displaySupply=-1
+addResources: Minerals=50, supply=1, displaySupply=-1
 pos: 0.3
 unitShownInUI: zergling
 setUnitMemory: unitType="zergling"
@@ -109,8 +121,8 @@ setUnitMemory: unitType="zergling"
 isLocked: if not self.hasUnitInTeam(withTag='HydraliskDen')
 isLockedMessage_ru:Требуется:\n  >Пещера Гидралисков
 isLockedMessage:Requires:\n  >Hydralisk den
-price: Minerals=100,Gas=25
-addResources: Minerals=100,Gas=25
+price: Minerals=75, Gas=25, supply=1, displaySupply=-1
+addResources: Minerals=75, Gas=25, supply=1, displaySupply=-1
 pos: 0.4
 unitShownInUI: hydralisk
 setUnitMemory: unitType="hydralisk"
@@ -121,8 +133,8 @@ isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags
 isLocked: if not self.hasUnitInTeam(withTag='Spire')
 isLockedMessage_ru:Требуется:\n  >Шпиль
 isLockedMessage:Requires:\n  >Spire
-price: Minerals=125,Gas=50
-addResources: Minerals=125,Gas=50
+price: Minerals=100, Gas=100, supply=2, displaySupply=-2
+addResources: Minerals=100, Gas=100, supply=2, displaySupply=-2
 pos: 0.5
 unitShownInUI: mutalisk
 setUnitMemory: unitType="mutalisk"
@@ -133,8 +145,8 @@ isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags
 isLocked: if not self.hasUnitInTeam(withTag='Spire')
 isLockedMessage_ru:Требуется:\n  >Шпиль
 isLockedMessage:Requires:\n  >Spire
-price: Minerals=250, Gas=75
-addResources: Minerals=250, Gas=75
+price: Minerals=25, Gas=75, supply=1, displaySupply=-1
+addResources: Minerals=25, Gas=75, supply=1, displaySupply=-1
 pos: 0.6
 unitShownInUI: scourge
 setUnitMemory: unitType="scourge"
@@ -145,8 +157,8 @@ isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags
 isLocked: if not self.hasUnitInTeam(withTag='QueenNest')
 isLockedMessage_ru:Требуется:\n  >Гнездо Королевы
 isLockedMessage:Requires:\n  >Queen nest
-price: Minerals=300,Gas=150
-addResources: Minerals=300,Gas=150
+price: Minerals=100, Gas=100, supply=2, displaySupply=-2
+addResources: Minerals=100, Gas=100, supply=2, displaySupply=-2
 pos: 0.7
 unitShownInUI: queen
 setUnitMemory: unitType="queen"
@@ -157,8 +169,8 @@ isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags
 isLocked: if not self.hasUnitInTeam(withTag='UltraliskCavern')
 isLockedMessage_ru:Требуется:\n  >Пещера Ультралисков
 isLockedMessage:Requires:\n  >Ultralisk cavern
-price: Minerals=1125,Gas=550
-addResources: Minerals=1125,Gas=550
+price: Minerals=200, Gas=200, supply=4, displaySupply=-4
+addResources: Minerals=200, Gas=200, supply=4, displaySupply=-4
 pos: 0.8
 unitShownInUI: ultralisk
 setUnitMemory: unitType="ultralisk"
@@ -169,8 +181,8 @@ isVisible: if self.resource(type='select',equalTo=1) and not self.globalTeamTags
 isLocked: if not self.hasUnitInTeam(withTag='DefilerMound')
 isLockedMessage_ru:Требуется:\n  >Логово Осквернителей
 isLockedMessage:Requires:\n  >Defiler mound
-price: Minerals=650,Gas=275
-addResources: Minerals=650,Gas=275
+price: Minerals=50, Gas=150, supply=2, displaySupply=-2
+addResources: Minerals=50, Gas=150, supply=2, displaySupply=-2
 pos: 0.9
 unitShownInUI: defiler
 setUnitMemory: unitType="defiler"

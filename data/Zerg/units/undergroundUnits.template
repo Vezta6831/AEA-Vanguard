@@ -10,37 +10,18 @@ mass: 500
 techLevel: 1
 buildSpeed: 0.005
 radius: 0
-hideScorchMark: false
+hideScorchMark: true
 isBio: true
 isBug: false
-selfRegenRate:0.01
+selfRegenRate:0.0062
 softCollisionOnAll: 12
 fogOfWarSightRange:6
 transportSlotsNeeded: 999
 effectOnDeath:CUSTOM:corpse
 
-[hiddenAction_armor]
-autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=0) and not self.tags(includes='armor1')
-temporarilyAddTags: armor1
-setUnitStats: armour+=1
-
-[hiddenAction_armor_2]
-autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=1) and not self.tags(includes='armor2')
-temporarilyAddTags: armor2
-setUnitStats: armour+=1
-
-[hiddenAction_armor_3]
-autoTrigger: if self.resource(type='ZergGroundCarapace',greaterThan=2) and not self.tags(includes='armor3')
-temporarilyAddTags: armor3
-setUnitStats: armour+=1
-
-[hiddenAction_swarm]
-autoTrigger: if self.hasUnitInTeam(withTag='swarm',withinRange=120) and not self.tags(includes='zergSwarm')
-temporarilyAddTags: zergSwarm
-
-[hiddenAction_notSwarm]
-autoTrigger: if not self.hasUnitInTeam(withTag='swarm',withinRange=120) and self.tags(includes='zergSwarm')
-temporarilyRemoveTags: zergSwarm
+[hiddenAction_armour]
+@copyFromSection:template_set_armour
+@define armourUpgradeType: ZergGroundCarapace
 
 [hiddenAction_consume_debuff]
 autoTriggerOnEvent: newMessage(withTag="consume")
@@ -86,13 +67,16 @@ scaleTo: 1
 alwaysSinglePress:true
 isVisible: true
 isActive: if self.resource.maelstrom<=0 and self.resource.stasis<=0
-displayType: upgrade
+displayType:infoOnly
 price:  0
 text_ru: Выкопаться
 text: Dig up
+text_zh:破土
 buildSpeed: 0s
 highPriorityQueue: true
 ai_isDisabled:true
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/Zerg/unburrow.png
 iconImage:ROOT:/DATA/Zerg/unburrow.png
 playSoundAtUnit:ROOT:/DATA/Zerg/lurk2.ogg:0.3
 pos: 0.1

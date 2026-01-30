@@ -1,9 +1,15 @@
+[core]
+copyFrom: ROOT:/DATA/total/unit_portrait.template
+
+[action_portrait]
+unitShownInUI:portrait_t_advisor
+
 [hiddenAction_fire]
-autoTrigger: if self.hp<self.maxHp*0.35
-addResources: hp=-1
+autoTrigger: if self.hp<self.maxHp*0.33
+addResources: hp=-0.186
 
 [template_fire]
-layer: beforeUI
+layer: afterBody
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
 teamColors:false

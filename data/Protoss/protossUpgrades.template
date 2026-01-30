@@ -9,3 +9,6 @@ hidden:true
 
 [global_resource_ProtossAirArmor]
 hidden:true
+
+[global_resource_ProtossShieldArmor]
+hidden:true

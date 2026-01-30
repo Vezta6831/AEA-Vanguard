@@ -41,98 +41,167 @@ hidden:            true
 
 
 [global_resource_Minerals]
-appendResourceInHUD:                Gas
-displayColor:                       #FF18D626
-displayColorUseInText:              false
-displayName:                        Minerals
-displayNameHideWhenIconShownInHUD:  true
-displayNameHideWhenIconShownInText: true
-displayTextAppendResourceWithGap:   true
-displayWhenZero:                    true
-hidden:                             false
-iconImage:                          ROOT:/DATA/total/icon_minerals.png
-
+iconImage:ROOT:/DATA/total/icon_minerals.png
+displayPos:1
+displayName_ru:Минералы
+displayName:Minerals
+displayName_zh:晶体矿
+displayWhenZero:true
+hidden:false
+displayRoundedDown:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayNameHideWhenIconShownInText:true
+displayNameHideWhenIconShownInHUD:true
+appendResourceInHUD:Gas
+displayTextAppendResourceWithGap: true
 
 [resource_localMinerals]
-displayName:                   Minerals
+displayName_ru:Минералы
+displayName:Minerals
+displayName_zh:晶体矿
+hidden:false
 equivalentGlobalResourceForAI: Minerals
-hidden:                        false
-
 
 [global_resource_Gas]
-appendResourceInHUD:                displaySupply
-displayColor:                       #FF18D626
-displayColorUseInText:              false
-displayName:                        Gas
-displayNameHideWhenIconShownInHUD:  true
-displayNameHideWhenIconShownInText: true
-displayTextAppendResourceWithGap:   true
-displayWhenZero:                    true
-hidden:                             true
-iconImage:                          ROOT:/DATA/total/icon_gas.png
-
+iconImage:ROOT:/DATA/total/icon_gas.png
+displayName_ru:Газ
+displayName:Gas
+displayName_zh:瓦斯
+displayWhenZero:true
+hidden:true
+displayRoundedDown:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayNameHideWhenIconShownInText:true
+displayNameHideWhenIconShownInHUD:true
+appendResourceInHUD:displaySupply
+displayTextAppendResourceWithGap: true
 
 [resource_localGas]
-displayName:                   Gas
+displayName_ru:Газ
+displayName:Gas
+displayName_zh:瓦斯
+hidden:false
 equivalentGlobalResourceForAI: Gas
-hidden:                        false
-
 
 [resource_localGas2]
-displayName:                   Gas
+displayName_ru:Газ
+displayName:Gas
+displayName_zh:瓦斯
+hidden:false
 equivalentGlobalResourceForAI: Gas
-hidden:                        false
-
 
 [global_resource_supply]
-displayColor:                       #FF18D626
-displayColorUseInText:              false
-displayName:                        Limit
-displayNameHideWhenIconShownInHUD:  true
-displayNameHideWhenIconShownInText: true
-hidden:                             true
-iconImage:                          ROOT:/DATA/total/icon_supply.png
-
+iconImage:ROOT:/DATA/total/icon_supply.png
+displayName_ru:Лимит
+displayName:Limit
+displayName_zh:人口
+hidden:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayNameHideWhenIconShownInText:true
+displayNameHideWhenIconShownInHUD:true
 
 [global_resource_displaySupply]
-displayColor:                       #FF18D626
-displayColorUseInText:              false
-displayName:                        Limit
-displayNameHideWhenIconShownInHUD:  true
-displayNameHideWhenIconShownInText: true
-displayTextAppendResource:          maxSupply
-displayWhenZero:                    true
-hidden:                             true
-iconImage:                          ROOT:/DATA/total/icon_supply.png
-
+iconImage:ROOT:/DATA/total/icon_supply.png
+displayName_ru:Лимит
+displayName:Limit
+displayName_zh:人口
+displayTextAppendResource: maxSupply
+displayWhenZero:true
+hidden:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayNameHideWhenIconShownInText:true
+displayNameHideWhenIconShownInHUD:true
 
 [global_resource_maxSupply]
-displayColor:          #FF18D626
-displayColorUseInText: false
 displayName:
-displayTextPrefix:     /
-displayWhenZero:       true
-hidden:                true
+displayTextPrefix:/
+hidden:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayWhenZero:true
 
+[global_resource_remainSupply]
+hidden:true
+displayWhenZero:true
 
 [global_resource_nuke]
-displayColor: #ff800000
-displayName:  Nukes
-hidden:       true
+iconImage:ROOT:/DATA/Terran/units/icon_nukeMissile.png
+displayName_ru:Ядерные ракеты
+displayName:Nukes
+displayName_zh:核弹
+hidden:true
+displayColor:#FF18D626
+displayColorUseInText:false
+displayNameHideWhenIconShownInText:true
+displayNameHideWhenIconShownInHUD:true
 
+[resource_localNuke]
+hidden:true
 
 [resource_select]
+displayName_ru: Выбор
 displayName: Select
-hidden:      true
-
+hidden:true
 
 [global_resource_baseAttack]
 hidden:true
 
-
 [global_resource_forcesAttack]
 hidden:true
 
+[global_resource_Hour]
+displayName: 
+displayNameShort: 
+displayColor: #ffffff
+displayPos:2
+hidden: false
+displayRoundedDown:true
+displayTextPrefix:0
+displayTextPostfix: :
+displayTextAppendResource: Minute2
+
+[global_resource_Minute2]
+displayName:
+displayNameShort:
+displayColor: #ffffff
+hidden: true
+displayRoundedDown:true
+displayTextPrefix: 
+displayTextPostfix: 
+displayTextAppendResource: Minute
+
+[global_resource_Minute]
+displayName:
+displayNameShort: 
+displayColor: #ffffff
+hidden: true
+displayRoundedDown:true
+displayTextPrefix: 
+displayTextPostfix: :
+displayTextAppendResource: Second2
+
+[global_resource_Second2]
+displayName: 
+displayNameShort: 
+displayColor: #ffffff
+hidden: true
+displayRoundedDown:true
+displayTextPrefix: 
+displayTextPostfix: 
+displayTextAppendResource: Second
+
+[global_resource_Second]
+displayName: 
+displayNameShort: 
+displayColor: #ffffff
+hidden: true
+displayRoundedDown:true
+displayTextPrefix: 
+displayTextAppendResourceWithGap: true
 
 # == HOURS == #
 [global_resource_t_hours_a]

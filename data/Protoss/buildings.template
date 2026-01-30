@@ -1,5 +1,13 @@
 [core]
-copyFrom:ROOT:/DATA/total/debuffs.template
+copyFrom:ROOT:/DATA/total/debuffs.template, ROOT:/DATA/total/unit_portrait.template, ROOT:/DATA/Protoss/protossUpgrades.template
+
+[hiddenAction_armour]
+autoTrigger: if memory.shieldArmour!=self.resource.ProtossShieldArmor and self.shield>=${minShield}
+setUnitStats: armour=self.resource.ProtossShieldArmor
+setUnitMemory: shieldArmour=self.resource.ProtossShieldArmor
+
+[action_portrait]
+unitShownInUI:portrait_p_advisor
 
 [template_light]
 layer: afterBody
@@ -13,7 +21,7 @@ alpha: 1.8-(self.lastConverted*0.85)
 onlyWhileAlive: true
 
 [template_fire]
-layer: beforeUI
+layer: afterBody
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
 teamColors:false

@@ -1,10 +1,10 @@
 [core]
-copyFrom:ROOT:/DATA/total/debuffs.template
+copyFrom:ROOT:/DATA/total/debuffs.template, ROOT:/DATA/total/unit_portrait.template
 class: CustomUnitMetadata
 price: 0
-selfRegenRate:0.01
+selfRegenRate:0.0062
 mass: 9000
-hideScorchMark: false
+hideScorchMark: true
 fogOfWarSightRange:17
 techLevel: 1
 buildSpeed: 1
@@ -14,7 +14,7 @@ nanoRange: 0
 isBuilding: true
 isBio: true
 numBitsOnDeath: 12
-isUnrepairableUnit: false
+isUnrepairableUnit: true
 effectOnDeath: CUSTOM:corpse
 
 [hiddenAction_baseAttack]
@@ -24,7 +24,7 @@ resourceAmount: baseAttack
 resourceAmount_setValue: 30
 
 [template_blood]
-layer: beforeUI
+layer: afterBody
 onlyOnNonPreview:true
 alwaysStartDirAtZero:true
 teamColors:false
@@ -53,14 +53,20 @@ frame_height: 200
 isVisible:true
 isActive:true
 buildSpeed:1s
+displayType:infoOnly
 price:0
 pos: 99
 text_ru:Уничтожить
 text:Delete
-iconImage:ROOT:/DATA/total/delete.png
+text_zh:自毁
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/total/delete.png
 addResources:hp=0
 ai_isDisabled:true
 highPriorityQueue: true
+
+[action_portrait]
+unitShownInUI:portrait_z_advisor
 
 [attack]
 canAttack: false

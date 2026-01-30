@@ -1,5 +1,5 @@
 [core]
-copyFrom:ROOT:/DATA/total/debuffs.template
+copyFrom:ROOT:/DATA/total/debuffs.template, ROOT:/DATA/total/unit_portrait.template
 class: CustomUnitMetadata
 armour:1
 mass:90000
@@ -17,6 +17,22 @@ numBitsOnDeath: 12
 isUnrepairableUnit: true
 effectOnDeath: CUSTOM:corpse
 
+[placementRule_smallUnit]
+searchTags: groundUnit, undergroundZerg
+searchDistance: 20
+maxCount: 0
+cannotPlaceMessage_ru: Здесь нельзя строить!
+cannotPlaceMessage: You can't build it here!
+searchTeam: enemy
+
+[placementRule_largeUnit]
+searchTags: groundLargeUnit
+searchDistance: 35
+maxCount: 0
+cannotPlaceMessage_ru: Здесь нельзя строить!
+cannotPlaceMessage: You can't build it here!
+searchTeam: enemy
+
 [hiddenAction_baseAttack]
 requireConditional: if self.resource(type='baseAttack',lessThan=1)
 autoTriggerOnEvent: tookDamage
@@ -31,10 +47,13 @@ playAnimation:create
 isVisible:true
 isActive:true
 buildSpeed:1s
+displayType:infoOnly
 price:0
 text_ru:Уничтожить
 text:Delete
-iconImage:ROOT:/DATA/total/delete.png
+text_zh:自毁
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/total/delete.png
 ai_isDisabled:true
 highPriorityQueue: true
 
@@ -72,6 +91,9 @@ animateFrameStart:0
 animateFrameEnd:2
 animateFrameSpeed:0.2
 alsoPlaySound:ROOT:/DATA/Zerg/buildEnd.wav:0.3
+
+[action_portrait]
+unitShownInUI:portrait_z_advisor
 
 [graphics]
 imageScale: 1

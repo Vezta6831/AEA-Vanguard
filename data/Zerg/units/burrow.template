@@ -7,9 +7,12 @@ price:0
 pos: 0.1
 text_ru: Зарыться
 text: Burrow
+text_zh:埋地
 buildSpeed: 0s
 highPriorityQueue: true
 ai_isDisabled:true
+iconExtraColor:#FFFFFFFF
+iconExtraImage:ROOT:/DATA/Zerg/burrow.png
 iconImage:ROOT:/DATA/Zerg/burrow.png
 playSoundAtUnit:ROOT:/DATA/Zerg/lurk.ogg:0.3
 alsoQueueAction:burrow_2
@@ -20,5 +23,6 @@ spawnEffects:CUSTOM:cloud
 highPriorityQueue: true
 whenBuilding_playAnimation:burrow
 whenBuilding_cannotMove:true
+convertTo_keepCurrentFields: armour
 canPlayerCancel:false
 setResourcesWithLogic:ensnare=0
