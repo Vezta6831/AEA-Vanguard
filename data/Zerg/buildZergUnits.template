@@ -2,12 +2,12 @@
 defineUnitMemory: float numLarvae, string unitType, unit rally
 
 [hiddenAction_spawnLarvae]
-autoTrigger: if memory.numLarvae<3 and self.customTimer>=14 and memory.unitType==null
+autoTrigger: if memory.numLarvae<6 and self.customTimer>=14 and memory.unitType==null
 spawnUnits:larva(offsetY=40,offsetRandomX=20)
 resetCustomTimer:true
 
 [hiddenAction_fullLarvae_resetTimer]
-autoTrigger: if memory.numLarvae>=3 and self.customTimer>=1
+autoTrigger: if memory.numLarvae>=6 and self.customTimer>=1
 resetCustomTimer:true
 
 [hiddenAction_addNumLarvae]
